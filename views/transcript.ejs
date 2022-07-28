@@ -17,26 +17,26 @@
 
 <div class="flex flex-col items-center parent">
   <div class="flex bold">
-    <%= filename %>
+
       <audio src="<%= fileUrl %>"controls></audio>
    </div>
     <div class="flex flex-row space-x-8 flex-wrap mt-16">
 
-      <!-- <div class="flex flex-col">
+       <!-- <div class="flex flex-col"> -->
         <% speakers.forEach(( duration, speakerId)=>{ %>
-          <div class="font-bold text-lg mt-8"> Speaker <%= speakerId %>
+          <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
           </div>
-          <div class="text-sm">
+          <div class="text-sm  speaker">
             <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
               Math.round(duration%60).toString().padStart(2, "0" ) %>
           </div>
-          <div class="text-sm">
+          <div class="text-sm speaker">
             <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
           </div>
 
 
    
-      </div> -->
+      <!-- </div> -->
     </div>
   </div>
 
