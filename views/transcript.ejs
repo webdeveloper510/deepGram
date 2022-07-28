@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/main.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Talk Analytics</title>
+</head>
+<body>
+<!---------------Setup---------------->
+
+<div class="flex flex-col items-center parent">
+  <div class="flex bold">
+    <%= filename %>
+      <audio src="<%= fileUrl %>"controls></audio>
+   </div>
+    <div class="flex flex-row space-x-8 flex-wrap mt-16">
+
+      <!-- <div class="flex flex-col">
+        <% speakers.forEach(( duration, speakerId)=>{ %>
+          <div class="font-bold text-lg mt-8"> Speaker <%= speakerId %>
+          </div>
+          <div class="text-sm">
+            <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
+              Math.round(duration%60).toString().padStart(2, "0" ) %>
+          </div>
+          <div class="text-sm">
+            <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
+          </div>
+
+
+   
+      </div> -->
+    </div>
+  </div>
+
+  <div class="boxes">
+    <div class="words-box">
+        <h1>Words In Audio file</h1> 
+        <p>   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
+    </div>
+
+    <div class="side-box">
+      <h3>Response</h3>
+      <div class="sidewords">
+          <pre>   <%= JSON.stringify(transcription, null, 3) %> </pre>
+      </div>
+                          <!-- <div class="json-box">
+                              <h1 >JSON Format</h1>
+                              <p>Interested in contributing? We ❤️ pull requests!
+                                  To make sure our community is safe for all, be sure 
+                                  to review and agree to our Code of Conduct. Then see the 
+                                  Contribution guidelines for more information.</p>
+                          </div> -->
+    </div>
+                        <!-- <div class="json-box">
+                            <h1 >JSON Format</h1>
+                            <p>Interested in contributing? We ❤️ pull requests!
+                                To make sure our community is safe for all, be sure 
+                                to review and agree to our Code of Conduct. Then see the 
+                                Contribution guidelines for more information.</p>
+                        </div> -->
+</div>
+
+
+
+<% }); %>
+      <!----------script---------->
+
+      <script type=" application/json" id="analytics-data">
+        <%- JSON.stringify(speakers).replace("</", "<\\/" ) -%>
+      </script>
+    
+      <script>
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const speakers = JSON.parse(
+          document.getElementById("analytics-data").innerHTML
+        );
+    
+      /**
+      * @param {number} duration
+      * @returns {string}
+      */
+     function durationToStr(duration) {
+       if (duration < 1) {
+         return Math.round(duration * 1000) + "ms";
+       }
+       if (duration < 60) {
+         return Math.round(duration) + "sec";
+       }
+       if (duration < 600) {
+         return (
+           Math.round(duration / 60) + "m" + Math.round(duration % 60).toString().padStart(2, "0") + "sec"
+         );
+       }
+       if (duration < 3600) {
+         return Math.round(duration / 60) + "mins";
+       }
+       if (duration < 3600 * 10) {
+         return (
+           Math.round(duration / 3600) +
+           "h" +
+           Math.round(duration % 3600).toString().padStart(2, "0") +
+           "min"
+         );
+       }
+       return Math.round(duration / 3600) + "hrs";
+     }
+     </script>
+      <!----------script---------->
+ 
+</body>
+</html>
