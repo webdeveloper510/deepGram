@@ -14,12 +14,12 @@
 </head>
 <body>
 <!---------------Setup---------------->
-<div class="flex flex-col items-center mt-16">
-    <!-- <div class="font-bold text-3xl">
-   
-      <%= JSON.stringify(transcription) %>
-    </div> -->
-   
+
+<div class="flex flex-col items-center parent">
+  <div class="flex bold">
+    <%= filename %>
+      <audio src="<%= fileUrl %>"controls></audio>
+   </div>
     <div class="flex flex-row space-x-8 flex-wrap mt-16">
 
       <!-- <div class="flex flex-col">
@@ -43,7 +43,21 @@
   <div class="boxes">
     <div class="words-box">
         <h1>Words In Audio file</h1> 
-        <p>   <%= JSON.stringify(transcription) %> </p>
+        <p>   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
+    </div>
+
+    <div class="side-box">
+      <h3>Response</h3>
+      <div class="sidewords">
+          <pre>   <%= JSON.stringify(transcription, null, 3) %> </pre>
+      </div>
+                          <!-- <div class="json-box">
+                              <h1 >JSON Format</h1>
+                              <p>Interested in contributing? We ❤️ pull requests!
+                                  To make sure our community is safe for all, be sure 
+                                  to review and agree to our Code of Conduct. Then see the 
+                                  Contribution guidelines for more information.</p>
+                          </div> -->
     </div>
                         <!-- <div class="json-box">
                             <h1 >JSON Format</h1>
@@ -54,7 +68,9 @@
                         </div> -->
 </div>
 
-<% }); %>
+
+
+
       <!----------script---------->
 
       <script type=" application/json" id="analytics-data">

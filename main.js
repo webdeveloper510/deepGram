@@ -13,6 +13,8 @@ const fs = require("fs"); // access to the server's file system.
 const { Deepgram } = require('@deepgram/sdk');
 const { json } = require("body-parser");
 
+
+
 const DG_KEY = process.env.DG_KEY;
 
 if (DG_KEY === undefined) {
@@ -114,7 +116,7 @@ async function requestDeepgramAPI({ res, filename, fileUrl, contentType, payload
 
 
     const speakers = computeSpeakingTime(transcription  );
-    return {speakers,transcription};
+    return {speakers,transcription  , fileUrl , filename};
 
     // res.render("transcript.ejs", {
     //   speakers,
@@ -153,6 +155,7 @@ app.post("/analyze-file", upload.single("file"), async (req, res) => {
       const file = req.file;
       const filePath = file.path.split("/");
       const fileUrl = "/uploaded-file/" + filePath[filePath.length - 1];
+      const filename = req.params.filename;
       //console.log(fileUrl)
       // We request file content...
       await fs.readFile(req.file.path, async (err, data) => {
@@ -169,7 +172,7 @@ app.post("/analyze-file", upload.single("file"), async (req, res) => {
           contentType: file.mimetype,
           payload: data,
         });
-        res.render("transcript.ejs",{speakers,transcription});
+        res.render("transcript.ejs",{speakers,transcription , fileUrl , filename});
      
        // console.log(words);
       });
