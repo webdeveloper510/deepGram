@@ -161,3 +161,6 @@ p {
 .boxes:nth-child(2) {
     display: flex;
 }
+.words{
+color:white;
+}
