@@ -43,7 +43,7 @@
     <div class="words-box">
         <h1>Words In Audio file</h1> 
         <!--p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p-->
-        <span ><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
+        <span class="words1" ><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
         <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
 <span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
 
