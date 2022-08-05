@@ -318,3 +318,4 @@ function addSpeakingTime(speaker, duration, timePerSpeaker ,res) {
 const listener = server.listen(process.env.PORT, () =>
   console.log(`Server is running on port ${process.env.PORT}`)
 );
+

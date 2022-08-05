@@ -18,101 +18,81 @@
 <div class="flex flex-col items-center parent">
   <div class="flex bold">
 
-      <audio src="<%= fileUrl %>"controls></audio>
+      <audio  id ="adi" src="<%= fileUrl %>"controls></audio>
    </div>
     <div class="flex flex-row space-x-8 flex-wrap mt-16">
+             <!-- <div class="flex flex-col"> -->
+              <% speakers.forEach(( duration, speakerId)=>{ %>
+                <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
+                </div>
+                <div class="text-sm  speaker">
+                  <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
+                    Math.round(duration%60).toString().padStart(2, "0" ) %>
+                </div>
+                <div class="text-sm speaker">
+                  <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
+                </div>
+      
 
-       <!-- <div class="flex flex-col"> -->
-        <% speakers.forEach(( duration, speakerId)=>{ %>
-          <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
-          </div>
-          <div class="text-sm  speaker">
-            <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
-              Math.round(duration%60).toString().padStart(2, "0" ) %>
-          </div>
-          <div class="text-sm speaker">
-            <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
-          </div>
-
-
-   
       <!-- </div> -->
     </div>
   </div>
 
   <div class="boxes">
+
     <div class="words-box">
         <h1>Words In Audio file</h1> 
-        <p>   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
-    </div>
+        <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
+        <p><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></p>
+        <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words[i].word) %> </span>
 
-    <div class="side-box">
+        <% } %>
+    </div>  
+
+    <div class="side-box"> 
       <h3>Response</h3>
       <div class="sidewords">
           <pre>   <%= JSON.stringify(transcription, null, 3) %> </pre>
       </div>
-                          <!-- <div class="json-box">
-                              <h1 >JSON Format</h1>
-                              <p>Interested in contributing? We ❤️ pull requests!
-                                  To make sure our community is safe for all, be sure 
-                                  to review and agree to our Code of Conduct. Then see the 
-                                  Contribution guidelines for more information.</p>
-                          </div> -->
     </div>
-                        <!-- <div class="json-box">
-                            <h1 >JSON Format</h1>
-                            <p>Interested in contributing? We ❤️ pull requests!
-                                To make sure our community is safe for all, be sure 
-                                to review and agree to our Code of Conduct. Then see the 
-                                Contribution guidelines for more information.</p>
-                        </div> -->
+                        
 </div>
-
 
 
 <% }); %>
       <!----------script---------->
+<style>
+  .here{
+    background-color: yellow;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script>
 
-      <script type=" application/json" id="analytics-data">
-        <%- JSON.stringify(speakers).replace("</", "<\\/" ) -%>
+( function(win, doc) {
+            var audioPlayer = doc.getElementById("adi");
+            var subtitles = doc.getElementsByClassName("words");
+                var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
+
+            
+
+            audioPlayer.addEventListener("timeupdate", function(e){
+                syncData.forEach(function(element, index, array){
+                    if( audioPlayer.currentTime >= element.start && audioPlayer.currentTime <= element.end ){
+                        $('.words').removeClass('here');
+                        subtitles[index].classList.add('here');
+                }
+                });
+            });
+        }(window, document));
+
+
+       
+      
       </script>
     
-      <script>
-        const ctx = document.getElementById("myChart").getContext("2d");
-        const speakers = JSON.parse(
-          document.getElementById("analytics-data").innerHTML
-        );
-    
-      /**
-      * @param {number} duration
-      * @returns {string}
-      */
-     function durationToStr(duration) {
-       if (duration < 1) {
-         return Math.round(duration * 1000) + "ms";
-       }
-       if (duration < 60) {
-         return Math.round(duration) + "sec";
-       }
-       if (duration < 600) {
-         return (
-           Math.round(duration / 60) + "m" + Math.round(duration % 60).toString().padStart(2, "0") + "sec"
-         );
-       }
-       if (duration < 3600) {
-         return Math.round(duration / 60) + "mins";
-       }
-       if (duration < 3600 * 10) {
-         return (
-           Math.round(duration / 3600) +
-           "h" +
-           Math.round(duration % 3600).toString().padStart(2, "0") +
-           "min"
-         );
-       }
-       return Math.round(duration / 3600) + "hrs";
-     }
-     </script>
+      
       <!----------script---------->
  
 </body>
