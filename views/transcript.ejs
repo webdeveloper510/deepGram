@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+
     <link
       href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
       rel="stylesheet"
@@ -61,6 +63,14 @@
 
 
 <% }); %>
+<div class="area">
+  <button onclick="copyToClip(document.getElementById('foo').innerHTML)">
+    Copy the stuff
+    </button>
+  <!-- You can use a div tag as well. -->
+  <textarea id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></textarea>
+  </div>
+
       <!----------script---------->
 <style>
   .here{
@@ -86,12 +96,52 @@
                 });
             });
         }(window, document));
+        var audio = document.getElementById('adi');
+        var target = document.getElementsByClassName('words')
+        $('span' ).bind('dblclick', function () {
+          audio.addEventListener( function change(e ,r){
+            audio.currentTime = e
+                              $(this).attr(audio.play())
+        
+      })
+    })
+
+
+
+
+
+
+
+
+    //     $('span' ).bind('dblclick', function() {
+    //     $(this).removeClass('here');
+
+    // }).blur(
+    //     function() {
+    //         $('adi').attr('contentEditable', false);
+    //     });
+
+    function copyToClip(str) {
+  function listener(e) {
+    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
+    e.preventDefault();
+  }
+  document.addEventListener("copy", listener);
+  document.execCommand("copy");
+  document.removeEventListener("copy", listener);
+  alert("The content is copied.")
+};
+
 
 
        
       
       </script>
-    
+    <script>
+      new FroalaEditor('textarea');
+    </script>
+          
       
       <!----------script---------->
  

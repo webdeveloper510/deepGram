@@ -167,3 +167,45 @@ color:white;
 .words1{
     color:white;
 }
+.area {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    width: 100%;
+}
+.fr-element  p{
+color: #000;
+}
+#fr-logo>svg {
+    height: 20px;
+    width: 47px;
+    margin: 7px 0;
+    display: none;
+    cursor: pointer;
+}
+#fr-logo>span {
+    display: none;
+    float: left;
+    font-family: sans-serif;
+    padding: 11px 5px 10px 15px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #b1b2b7;
+}
+#fr-logo>span {
+    display: none;
+    float: left;
+    font-family: sans-serif;
+    padding: 11px 5px 10px 15px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #b1b2b7;
+}
+button {
+    margin: 10px;
+    padding: 5px 9px;
+    font-size: 13px;
+    font-family: sans-serif;
+    font-weight: bold;
+    /* transition: 0.9s; */
+}
