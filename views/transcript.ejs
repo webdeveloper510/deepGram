@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/main.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-
     <link
       href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
       rel="stylesheet"
       type="text/css"
     />
+    <!-- Include Editor JS files. -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
     <title>Talk Analytics</title>
 </head>
 <body>
@@ -44,10 +45,10 @@
 
     <div class="words-box">
         <h1>Words In Audio file</h1> 
-        <!--p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p-->
-        <span class="words1" ><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
+        <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
+        <p><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></p>
         <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words[i].word) %> </span>
 
         <% } %>
     </div>  
@@ -61,7 +62,6 @@
                         
 </div>
 
-
 <% }); %>
 <div class="area">
   <button onclick="copyToClip(document.getElementById('foo').innerHTML)">
@@ -74,7 +74,7 @@
       <!----------script---------->
 <style>
   .here{
-   border-bottom:2px solid yellow;
+    background-color: yellow;
   }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -93,35 +93,46 @@
                         $('.words').removeClass('here');
                         subtitles[index].classList.add('here');
                 }
+                            // $('span' ).bind('dblclick', function() {
+                            //   $(this).attr("contenteditable","true")
+                              // subtitles[index].play(audioPlayer)//.$('adi');
+                              // $(this).classList.add('here') 
+                            //   // if(element.start != audioPlayer.currentTime){
+                            //   //   $('adi').play(subtitles[index])
+                            //   // }
+                          //  })
                 });
+
+       
+                
             });
         }(window, document));
+
+
+        // on click 
+
         var audio = document.getElementById('adi');
         var target = document.getElementsByClassName('words')
-        $('span' ).bind('dblclick', function () {
-          audio.addEventListener( function change(e ,r){
-            audio.currentTime = e
-                              $(this).attr(audio.play())
-        
+        var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
+        syncData.forEach(function (element , index) {
+        // function getcurtime(){
+        $('.words' ).bind('dblclick' , function(){
+          // audio.currentTime = $(this).addEventListener(function(){
+
+
+        // audio.addEventListener('canplaythrough' , function(){
+          // audio.currentTime
+          $(this).position(element.currentTime, element.word , target[index])
+          //  alert(a)    
+          audio.currentTime = element.start
+                  $('#adi').attr(audio.play())
       })
-    })
+        })
+
+// Copy Button for Text-area
 
 
-
-
-
-
-
-
-    //     $('span' ).bind('dblclick', function() {
-    //     $(this).removeClass('here');
-
-    // }).blur(
-    //     function() {
-    //         $('adi').attr('contentEditable', false);
-    //     });
-
-    function copyToClip(str) {
+  function copyToClip(str) {
   function listener(e) {
     e.clipboardData.setData("text/html", str);
     e.clipboardData.setData("text/plain", str);
@@ -138,10 +149,10 @@
        
       
       </script>
-    <script>
-      new FroalaEditor('textarea');
-    </script>
-          
+    <!-- Initialize the editor. -->
+<script>  
+  new FroalaEditor('textarea');
+</script>
       
       <!----------script---------->
  
