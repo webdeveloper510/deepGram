@@ -163,6 +163,7 @@ p {
 }
 .words{
 color:#000;
+cursor: pointer;
 }
 .words1{
     color:white;

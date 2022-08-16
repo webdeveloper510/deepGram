@@ -109,7 +109,8 @@
         var target = document.getElementsByClassName('words')[0]
         var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
         syncData.forEach(function (element ) {
-        $('span' ).bind('dblclick' , function(event){
+        $('span' ).on('click' , function(event){
+          $(this).css('cursor', 'pointer');
         //   $(this).find(element.currentTime, element.start , element.target ) 
         //   .addEventListener(change , function(e){
         // audio.currentTime =  
