@@ -45,10 +45,10 @@
 
     <div class="words-box">
         <h1>Words In Audio file</h1> 
-        <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
-        <p><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></p>
+        <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
+        <span style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
         <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words[i].word) %> </span>
+<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
 
         <% } %>
     </div>  
@@ -74,7 +74,11 @@
       <!----------script---------->
 <style>
   .here{
-    background-color: yellow;
+    text-decoration: underline;
+    text-decoration-color: yellow;
+  }
+  .words{
+    color:#fff;
   }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
