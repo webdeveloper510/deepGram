@@ -106,20 +106,41 @@
         // on click 
 
         var audio = document.getElementById('adi');
-        var target = document.getElementsByClassName('words')
+        var target = document.getElementsByClassName('words')[0]
         var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
-        syncData.forEach(function (element , index , array) {
-        // function getcurtime(){
-        $('span' ).bind('dblclick' , function(){
-          $(this).find(element.currentTime, element.start , element.target ) 
-          .addEventListener(change , function(e){
-        audio.currentTime = 
+        syncData.forEach(function (element ) {
+        $('span' ).bind('dblclick' , function(event){
+        //   $(this).find(element.currentTime, element.start , element.target ) 
+        //   .addEventListener(change , function(e){
+        // audio.currentTime =  
+
+  // const attrs = Object.fromEntries(Array.from(this.attributes).map(item => [item.start]))
+  // console.log(attrs.start) // "test"
+
+      //  var a = $(this).val(element.start)
+      a = $(this).attr('start')
+      // console.log(a);
+  // })
+      //   console.log()
+        // let value = element.start.childNodes.nodeValue;
+        // console.log(value) // "test"
+  //       const attrs = Object.fromEntries(Array.from(a.attributes).map(item => [item.start]))
+  // console.log(attrs.start) // "test"
+        // if(typeof $(this).attr('start') != "undefined"){ 
+        //   console.log($(this).attr('src'));
+        //   }
+          if (
+        audio.currentTime = a ){
           // console.log(audio.currentTime)
-                  $(this).play()
+                  $(this).attr(audio.play())
+        }
+        else{
+          cpnsole.log('error')
+        }
+        })
           // target[index].classList.add('here')
       })
-        })  
-      })
+      
 // Copy Button for Text-area
 
 
