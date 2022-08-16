@@ -97,20 +97,10 @@
                         $('.words').removeClass('here');
                         subtitles[index].classList.add('here');
                 }
-                            // $('span' ).bind('dblclick', function() {
-                            //   $(this).attr("contenteditable","true")
-                              // subtitles[index].play(audioPlayer)//.$('adi');
-                              // $(this).classList.add('here') 
-                            //   // if(element.start != audioPlayer.currentTime){
-                            //   //   $('adi').play(subtitles[index])
-                            //   // }
-                          //  })
-                });
-
-       
-                
+        });
             });
-        }(window, document));
+                  }
+                    (window, document));
 
 
         // on click 
@@ -118,21 +108,18 @@
         var audio = document.getElementById('adi');
         var target = document.getElementsByClassName('words')
         var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
-        syncData.forEach(function (element , index) {
+        syncData.forEach(function (element , index , array) {
         // function getcurtime(){
-        $('.words' ).bind('dblclick' , function(){
-          // audio.currentTime = $(this).addEventListener(function(){
-
-
-        // audio.addEventListener('canplaythrough' , function(){
-          // audio.currentTime
-          $(this).position(element.currentTime, element.word , target[index])
-          //  alert(a)    
-          audio.currentTime = element.start
-                  $('#adi').attr(audio.play())
+        $('span' ).bind('dblclick' , function(){
+          $(this).find(element.currentTime, element.start , element.target ) 
+          .addEventListener(change , function(e){
+        audio.currentTime = 
+          // console.log(audio.currentTime)
+                  $(this).play()
+          // target[index].classList.add('here')
       })
-        })
-
+        })  
+      })
 // Copy Button for Text-area
 
 
