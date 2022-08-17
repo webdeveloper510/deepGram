@@ -45,10 +45,10 @@
 
     <div class="words-box">
         <h1>Words In Audio file</h1> 
-        <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p>
-        <p><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></p>
+        <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
+        <span style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
         <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words[i].word) %> </span>
+<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
 
         <% } %>
     </div>  
@@ -74,7 +74,11 @@
       <!----------script---------->
 <style>
   .here{
-    background-color: yellow;
+    text-decoration: underline;
+    text-decoration-color: yellow;
+  }
+  .words{
+    color:#fff;
   }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -93,42 +97,51 @@
                         $('.words').removeClass('here');
                         subtitles[index].classList.add('here');
                 }
-                            // $('span' ).bind('dblclick', function() {
-                            //   $(this).attr("contenteditable","true")
-                              // subtitles[index].play(audioPlayer)//.$('adi');
-                              // $(this).classList.add('here') 
-                            //   // if(element.start != audioPlayer.currentTime){
-                            //   //   $('adi').play(subtitles[index])
-                            //   // }
-                          //  })
-                });
-
-       
-                
+        });
             });
-        }(window, document));
+                  }
+                    (window, document));
 
 
         // on click 
 
         var audio = document.getElementById('adi');
-        var target = document.getElementsByClassName('words')
+        var target = document.getElementsByClassName('words')[0]
         var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
-        syncData.forEach(function (element , index) {
-        // function getcurtime(){
-        $('.words' ).bind('dblclick' , function(){
-          // audio.currentTime = $(this).addEventListener(function(){
+        syncData.forEach(function (element ) {
+        $('span' ).on('click' , function(event){
+          $(this).css('cursor', 'pointer');
+        //   $(this).find(element.currentTime, element.start , element.target ) 
+        //   .addEventListener(change , function(e){
+        // audio.currentTime =  
 
+  // const attrs = Object.fromEntries(Array.from(this.attributes).map(item => [item.start]))
+  // console.log(attrs.start) // "test"
 
-        // audio.addEventListener('canplaythrough' , function(){
-          // audio.currentTime
-          $(this).position(element.currentTime, element.word , target[index])
-          //  alert(a)    
-          audio.currentTime = element.start
-                  $('#adi').attr(audio.play())
-      })
+      //  var a = $(this).val(element.start)
+      a = $(this).attr('start')
+      // console.log(a);
+  // })
+      //   console.log()
+        // let value = element.start.childNodes.nodeValue;
+        // console.log(value) // "test"
+  //       const attrs = Object.fromEntries(Array.from(a.attributes).map(item => [item.start]))
+  // console.log(attrs.start) // "test"
+        // if(typeof $(this).attr('start') != "undefined"){ 
+        //   console.log($(this).attr('src'));
+        //   }
+          if (
+        audio.currentTime = a ){
+          // console.log(audio.currentTime)
+                  $(this).attr(audio.play())
+        }
+        else{
+          cpnsole.log('error')
+        }
         })
-
+          // target[index].classList.add('here')
+      })
+      
 // Copy Button for Text-area
 
 
