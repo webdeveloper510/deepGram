@@ -67,9 +67,11 @@
 
 <% }); %>
 <div class="area">
-  <button class="copy" onclick="copyToClip(document.getElementById('foo').innerHTML)">
+  <button class="copy" onclick="copyToClip(document.getElementById('foo').innerText)">
     Copy the stuff
     </button>
+    <!-- Auto width -->
+<button class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
   <!-- You can use a div tag as well. -->
   <p id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
   </div>
@@ -145,22 +147,51 @@
           // target[index].classList.add('here')
       })
       
-// Copy Button for Text-area
+      
+      
+  // Copy Button for Text-area
 
 
   function copyToClip(str) {
   function listener(e) {
-    e.clipboardData.setData("text/html", str);
+    // e.clipboardData.setData("text/html", str);
     e.clipboardData.setData("text/plain", str);
     e.preventDefault();
   }
   document.addEventListener("copy", listener);
   document.execCommand("copy");
   document.removeEventListener("copy", listener);
+  console.log("copied" , str);
   alert("The content is copied.")
 };
 
+// DownLoad Button Click
 
+function saveTextAsFile(textToWrite, fileNameToSaveAs)
+    {
+    	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/plain'}); 
+    	var downloadLink = document.createElement("a");
+      console.log(downloadLink);
+    	downloadLink.download = fileNameToSaveAs;
+    	downloadLink.innerHTML = "Download File";
+    	if (window.webkitURL != null)
+    	{
+    		// Chrome allows the link to be clicked
+    		// without actually adding it to the DOM.
+    		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    	}
+    	else
+    	{
+    		// Firefox requires the link to be added to the DOM
+    		// before it can be clicked.
+    		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    		downloadLink.onclick = destroyClickedElement;
+    		downloadLink.style.display = "none";
+    		document.body.appendChild(downloadLink);
+    	}
+    
+    	downloadLink.click();
+    }
 
        
       

@@ -248,3 +248,22 @@ button {
     padding: 14px 12px;
     line-height: 1;
 }
+.area button.copy:hover{
+    background-color: #ada11e;
+}
+/* Style buttons */
+.btn {
+    background: #e5d40e;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: none;
+    min-width: 150px;
+    padding: 14px 12px;
+    line-height: 1;
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: #ada11e;
+  }
