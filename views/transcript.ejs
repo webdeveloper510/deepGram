@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/main.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <!-- Include stylesheet -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+   <!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
       rel="stylesheet"
@@ -64,11 +67,11 @@
 
 <% }); %>
 <div class="area">
-  <button onclick="copyToClip(document.getElementById('foo').innerHTML)">
+  <button class="copy" onclick="copyToClip(document.getElementById('foo').innerHTML)">
     Copy the stuff
     </button>
   <!-- You can use a div tag as well. -->
-  <textarea id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></textarea>
+  <p id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
   </div>
 
       <!----------script---------->
@@ -162,10 +165,13 @@
        
       
       </script>
-    <!-- Initialize the editor. -->
-<script>  
-  new FroalaEditor('textarea');
+<!-- Initialize Quill editor -->
+<script>
+  var quill = new Quill('#foo ', {
+    theme: 'snow'
+  });
 </script>
+
       
       <!----------script---------->
  
