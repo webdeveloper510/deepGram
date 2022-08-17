@@ -67,7 +67,7 @@
 
 <% }); %>
 <div class="area">
-  <button class="copy" onclick="copyToClip(document.getElementById('foo').innerText)">
+  <button class="copy" onclick="copyToClip()">
     Copy the stuff
     </button>
     <!-- Auto width -->
@@ -152,10 +152,12 @@
   // Copy Button for Text-area
 
 
-  function copyToClip(str) {
+  function copyToClip() {
+    var str = document.getElementById('foo').innerHTML;
   function listener(e) {
+    
     // e.clipboardData.setData("text/html", str);
-    e.clipboardData.setData("text/plain", str);
+    e.clipboardData.setData("text/html", str);
     e.preventDefault();
   }
   document.addEventListener("copy", listener);
@@ -167,11 +169,13 @@
 
 // DownLoad Button Click
 
-function saveTextAsFile(textToWrite, fileNameToSaveAs)
+async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     {
     	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/plain'}); 
+
     	var downloadLink = document.createElement("a");
-      console.log(downloadLink);
+      var aa = await textFileAsBlob.text();
+      console.log(aa);
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
@@ -185,12 +189,14 @@ function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Firefox requires the link to be added to the DOM
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+
     		downloadLink.onclick = destroyClickedElement;
-    		downloadLink.style.display = "none";
+    	////	downloadLink.style.display = "none";
     		document.body.appendChild(downloadLink);
     	}
+      console.log(window.URL.createObjectURL(textFileAsBlob))
     
-    	downloadLink.click();
+    	//downloadLink.click();
     }
 
        
