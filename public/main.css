@@ -283,3 +283,255 @@ button {
     font-size: 1.17em;
     color: #fff;
 }
+
+/*****************************CheckBUtton***********************************/
+.switch {
+    position: relative;
+    display: inline-block;
+  }
+  .switch h1 {
+    text-align: center;
+    color: #FFF;
+    font-size: 30px;
+}
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    right: -70px;
+    bottom: 40px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    width: 58px;
+    height: 31px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  .dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 11px;
+    font-size: 16px;
+    border: none;
+    border-radius: 34px;
+}
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+  /****************ToolTip for Confidence****************/
+/* 
+  .words-box {
+    position: relative;
+  }
+  .words-box .tooltiptext{
+    visibility: hidden;
+    width: 72px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 9%;
+    left: 5%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .words-box .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .words-box:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .flex.bold {
+    display: flex;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .dropdown {
+    width: 30%;
+  } */
+
+  .mt-40.flex.flex-row.space-x-10 {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 17%;
+}
+
+#file-name {
+    padding-left: 20px;
+}
+
+#url-form form {
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#file-form form,
+#url-form form {
+    display: flex;
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#file-form form {
+    margin-bottom: 40px;
+}
+
+#file-form form span,
+#url-form form span {
+    width: fit-content;
+    min-width: 160px;
+    height: fit-content;
+    padding: 7px;
+    border-radius: 5px;
+    margin-left: 0;
+}
+
+#file-form form label,
+#url-form form label {
+    width: 20%;
+    min-width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 183px;
+    cursor: pointer;
+}
+
+#file-form form input,
+#url-form form input {
+    min-height: 34px;
+    padding: 0 7px;
+    outline: none;
+    border-radius: 3px;
+    box-shadow: none;
+    border: none;
+}
+
+#file-form form button,
+#url-form form button {
+    margin-top: 30px;
+    width: 45%;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#go-back-button {
+    background: #e5d40e;
+    border: none;
+    padding: 12px 12px;
+    min-width: 150px;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.confidence-list {
+    display: flex;
+    width: 100%;
+    margin: 20px 0 15px;
+}
+
+.confidence-list label {
+    display: flex;
+    align-items: center;
+    width: 25%;
+}
+
+.confidence-list label h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.confidence-list label .slider {
+    position: relative;
+    top: 0;
+    left: 0;
+}

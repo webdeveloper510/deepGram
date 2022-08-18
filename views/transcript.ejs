@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/main.css" rel="stylesheet" />
     <!-- Include stylesheet -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-   <!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+      <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
       rel="stylesheet"
       type="text/css"
     />
     <!-- Include Editor JS files. -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
     <title>Talk Analytics</title>
 </head>
 <body>
@@ -25,58 +25,105 @@
   <div class="flex bold">
 
       <audio  id ="adi" src="<%= fileUrl %>"controls></audio>
-   </div>
-    <div class="flex flex-row space-x-8 flex-wrap mt-16">
-             <!-- <div class="flex flex-col"> -->
-              <% speakers.forEach(( duration, speakerId)=>{ %>
-                <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
+      <!-------Speed DropDown----->
+      <div class="dropdown">
+          <button class="dropbtn">Speed</button>
+                <div class="dropdown-content">
+                    <button onclick="setPlaySpeed(0.9)" type="button">0.9x</button>
+                    <button onclick="setPlaySpeed(1)" type="button">1x</button>
+                    <button onclick="setPlaySpeed(1.2)" type="button">1.2x</button>
+                    <button onclick="setPlaySpeed(1.5)" type="button">1.5x</button>
+                    <button onclick="setPlaySpeed(5.7)" type="button">5.7x</button> 
                 </div>
+      </div>  
+
+  <!------- Check-buttons----->
+        <div class="confidence-list">
+          <label class="switch"> <h1>Confidence</h1>
+            <input id="switch-button" type="checkbox"onclick="Check()">
+            <span class="slider round">	</span>
+          </label>
+          
+          <label class="switch"> <h1>speakerId</h1>
+            <input id="switch-button2" type="checkbox"onclick="Check()">
+            <span class="slider round">	</span>
+          </label>
+
+          <label class="switch"> <h1>Pouncation</h1>
+            <input id="switch-button"3 type="checkbox"onclick="Check()">
+            <span class="slider round">	</span>
+          </label>
+
+          <label class="switch"> <h1>Numarial</h1>
+            <input id="switch-button4" type="checkbox"onclick="Check()">
+            <span class="slider round">	</span>
+          </label>
+        </div>       
+
+              <div class="flex flex-row space-x-8 flex-wrap mt-16">
+               <!-- <div class="flex flex-col"> -->
+                    <% speakers.forEach(( duration, speakerId)=>{ %>
+                        <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
+                        </div>
                 <div class="text-sm  speaker">
-                  <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
-                    Math.round(duration%60).toString().padStart(2, "0" ) %>
+                     <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
+                     Math.round(duration%60).toString().padStart(2, "0" ) %>
                 </div>
                 <div class="text-sm speaker">
-                  <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
+                    <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
                 </div>
       
 
-      <!-- </div> -->
+      </div>
     </div>
   </div>
 
+  <!------- Output In Boxes ---------->
   <div class="boxes">
 
-    <div class="words-box">
-        <h1>Words In Audio file</h1> 
-        <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
-        <span style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
-        <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-<span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+        <div class="words-box">
+                <h1>Words In Audio file</h1> 
+                <!-- <span class="tooltiptext"> done</span> -->
+                <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
+                <span style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
+                <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+                <span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
 
-        <% } %>
-    </div>  
+                <% } %>
+        </div>  
 
-    <div class="side-box"> 
-      <h3>Response</h3>
-      <div class="sidewords">
-          <pre>   <%= JSON.stringify(transcription, null, 3) %> </pre>
-      </div>
-    </div>
-                        
+        <div class="side-box"> 
+              <h3>Response</h3>
+                    <div class="sidewords">
+                      <pre id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
+
+                          <pre id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(({word})=>  word )) %> </pre>
+
+                    </div>
+                    <!-- <pre id="div2"> HEllo</pre> -->  
+
+        </div>
+
+
 </div>
 
 <% }); %>
+
+<!--------Text Editor ------>
 <div class="area">
-  <button class="copy" onclick="copyToClip()">
-    Copy the stuff
-    </button>
-    <!-- Auto width -->
-<button class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
-  <!-- You can use a div tag as well. -->
+        <!---copy--button-->
+        <button class="copy" onclick="copyToClip()">
+               Copy the stuff
+        </button>
+
+              <!-- Download button-->
+              <button class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+
+<!------------Text Editor Content----->
   <p id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
   </div>
 
-      <!----------script---------->
+      <!----------CSS Stylr---------->
 <style>
   .here{
     text-decoration: underline;
@@ -86,8 +133,13 @@
     color:#fff;
   }
 </style>
+
+
+<!--------Script Part----->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script>
+
+//-----audio Click ------
 
 ( function(win, doc) {
             var audioPlayer = doc.getElementById("adi");
@@ -209,7 +261,37 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
   });
 </script>
 
-      
+ <!-- Playback Speed -->
+<script>
+ var audio = document.getElementById("adi");
+function setPlaySpeed(speed) {
+  audio.playbackRate = speed;
+} 
+
+
+// CheckBox
+
+function Check() {
+  // Get the checkbox
+  var checkBox = document.getElementById("switch-button");
+  // Get the output text
+  var text = document.getElementById("div1");
+var text1 = document.getElementById("div2");
+  // If1 the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "none";
+    text1.style.display = "block";
+    
+  } else {  
+  text.style.display = "block"
+    text1.style.display = "none";
+  }
+}
+</script>  
+
+
+
+
       <!----------script---------->
  
 </body>
