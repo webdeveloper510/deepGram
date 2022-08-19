@@ -81,7 +81,9 @@ audio.mt-10 {
 }
 
 .side-box {
-    width: 30%; 
+    width: 30%;
+    float: left;
+    margin: 0 0 0 80px;
 }
 
 audio {
@@ -354,11 +356,15 @@ button {
     border: none;
     border-radius: 34px;
 }
+.flex_bold {
+    display: flex;
+}
   
-  .dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
-  }
+    margin: 0 0 0 22px;
+}
   
   .dropdown-content {
     display: none;
@@ -534,4 +540,46 @@ button {
     position: relative;
     top: 0;
     left: 0;
+}
+
+/**************Before ******************/
+
+.abc h1 {
+    text-align: center;
+    color: #f1f3f4;
+    font-size: 20px;
+    font-weight: 400;
+}
+.abc button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: bold;
+    /* transition: 0.9s; */
+    text-align: center;
+    margin: 46px 0 0 27pc;
+    background: #ff0;
+    outline: none;
+    border: none;
+    border-radius: 34px;
+    cursor: pointer;
+}
+.abc button:hover{
+    background: #d2da07;
+    color: #000;
+}
+
+pre#div2 {
+    word-break: break-all;
+    white-space: pre-wrap;
+    line-height: 3;
+}
+pre#div3 {
+    word-break: break-all;
+    white-space: pre-wrap;
+    line-height: 3;
+}pre#div4 {
+    word-break: break-all;
+    white-space: pre-wrap;
+    line-height: 3;
 }

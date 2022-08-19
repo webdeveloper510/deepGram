@@ -108,26 +108,31 @@ async function requestDeepgramAPI({ res, filename, fileUrl, contentType, payload
 
 
     const transcription = await deepgram.transcription.preRecorded(audioObj, {
-      punctuate: false,
+      punctuate: true,
       diarize: true,
-      
     });
+    // console.log("pu" , transcription.results.channels[0].alternatives[0].words)
+    // console.log("file" , file)
     //console.log("transcription==============>",transcription)
     console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].transcript)
 
+    // console.log('file:' , filename)
 
     const speakers = computeSpeakingTime(transcription  );
     return {speakers,transcription  , fileUrl , filename};
 
-    // res.render("transcript.ejs", {
-    //   speakers,
-    //   filename,
-    //   fileUrl,
+    res.render("transcript.ejs", {
+      speakers,
+      filename,
+      fileUrl,
 
-    // });
-  } catch (err) {
+    });
+  }
+  catch (err) {
     error(res, err);
   }
+  // console.log('file:' , filename)
+
 }
 
 
@@ -157,6 +162,7 @@ app.post("/analyze-file", upload.single("file"), async (req, res) => {
       const filePath = file.path.split("/");
       const fileUrl = "/uploaded-file/" + filePath[filePath.length - 1];
       const filename = req.params.filename;
+
       //console.log(fileUrl)
       // We request file content...
       await fs.readFile(req.file.path, async (err, data) => {
@@ -174,7 +180,6 @@ app.post("/analyze-file", upload.single("file"), async (req, res) => {
           payload: data,
         });
         res.render("transcript.ejs",{speakers,transcription , fileUrl , filename});
-     
        // console.log(words);
       });
      

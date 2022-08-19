@@ -46,7 +46,7 @@
             class="bg-darkcharcoal p-2 border border-casper border-solid rounded-md placeholder-steel w-60" name="url"
             placeholder="myremoteurl-file.com" required />
           <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" >
-            Analyze
+            Submit
           </button>
         </form>
       </div>
@@ -58,33 +58,7 @@
     </button>
 
 
-     <!------Check Buttons------>
-
-<!------- Check-buttons----->
-<!-- <div class="confidence-list" hidden>
-  <label class="switch"> <h1>Confidence</h1>
-    <input id="switch-button" type="checkbox"onclick="Check()">
-    <span class="slider round">	</span>
-  </label>
   
-  <label class="switch"> <h1>speakerId</h1>
-    <input id="switch-button2" type="checkbox"onclick="Check()">
-    <span class="slider round">	</span>
-  </label>
-
-  <label class="switch"> <h1>Pouncation</h1>
-    <input id="switch-button"3 type="checkbox"onclick="Check()">
-    <span class="slider round">	</span>
-  </label>
-
-  <label class="switch"> <h1>Numarial</h1>
-    <input id="switch-button4" type="checkbox"onclick="Check()">
-    <span class="slider round">	</span>
-  </label>
-</div>    -->
-
-    <!---------close------>
-
 
 
     <!----scripts------>
@@ -96,10 +70,6 @@
     const fileName = document.querySelector("#file-name");
     const fileInputLabel = document.querySelector("#file-input-label");
     const goBackButton = document.querySelector("#go-back-button");
-    const selection = document.querySelector(".confidence-list");
-
-
-
     urlInput.addEventListener("input", () => {
       fileForm.hidden = true;
       document
@@ -129,7 +99,7 @@
     });
 
     function handleSubmit() {
-      const submitButtonNode = this.querySelector("button[type='submit']");
+      const submitButtonNode = this.querySelector("button[type='submit' value='Submit']");
       console.log(submitButtonNode, this);
       submitButtonNode.classList.add("opacity-50", "cursor-not-allowed");
       submitButtonNode.innerText = "Analyzing...";
@@ -138,6 +108,7 @@
 
     urlForm.addEventListener("submit", handleSubmit);
     fileForm.addEventListener("submit", handleSubmit);
+
   </script>
 
 </body>

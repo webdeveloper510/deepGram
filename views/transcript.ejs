@@ -19,57 +19,45 @@
     <title>Talk Analytics</title>
 </head>
 <body>
-<!---------------Setup---------------->
+ 
+<!--------before-----click------->
+<div class="abc"> 
+  <h1><%= JSON.stringify(filename) %></h1>
+<button type="submit" id="submit" > 
+Analyze</button>
+</div>
 
-<div class="flex flex-col items-center parent">
-  <div class="flex bold">
 
-      <audio  id ="adi" src="<%= fileUrl %>"controls></audio>
+<!---------After Click------Setup---------------->
+
+<div  class="flex flex-col items-center parent">
+  <div  class="flex_bold">
+
+      <audio   id="adi" src="<%= fileUrl %>"controls></audio>
       <!-------Speed DropDown----->
-      <div class="dropdown">
-          <button class="dropbtn">Speed</button>
+      <div  class="dropdown">
+          <button  class="dropbtn">Speed</button>
+          <span class="caret"></span>
                 <div class="dropdown-content">
-                    <button onclick="setPlaySpeed(0.9)" type="button">0.9x</button>
-                    <button onclick="setPlaySpeed(1)" type="button">1x</button>
-                    <button onclick="setPlaySpeed(1.2)" type="button">1.2x</button>
-                    <button onclick="setPlaySpeed(1.5)" type="button">1.5x</button>
-                    <button onclick="setPlaySpeed(5.7)" type="button">5.7x</button> 
+
+                    <button  onclick="setPlaySpeed(0.9)" type="button">0.9x</button>
+                    <button   onclick="setPlaySpeed(1)" type="button">1x</button>
+                    <button   onclick="setPlaySpeed(1.2)" type="button">1.2x</button>
+                    <button   onclick="setPlaySpeed(2.5)" type="button">2.5x</button>
+                    <button  onclick="setPlaySpeed(5.2)" type="button">5.2x</button> 
                 </div>
       </div>  
 
-  <!------- Check-buttons----->
-        <div class="confidence-list">
-          <label class="switch"> <h1>Confidence</h1>
-            <input id="switch-button" type="checkbox"onclick="Check()">
-            <span class="slider round">	</span>
-          </label>
-          
-          <label class="switch"> <h1>speakerId</h1>
-            <input id="switch-button2" type="checkbox"onclick="Check()">
-            <span class="slider round">	</span>
-          </label>
-
-          <label class="switch"> <h1>Pouncation</h1>
-            <input id="switch-button"3 type="checkbox"onclick="Check()">
-            <span class="slider round">	</span>
-          </label>
-
-          <label class="switch"> <h1>Numarial</h1>
-            <input id="switch-button4" type="checkbox"onclick="Check()">
-            <span class="slider round">	</span>
-          </label>
-        </div>       
-
-              <div class="flex flex-row space-x-8 flex-wrap mt-16">
+              <div  class="flex flex-row space-x-8 flex-wrap mt-16">
                <!-- <div class="flex flex-col"> -->
                     <% speakers.forEach(( duration, speakerId)=>{ %>
                         <div class="font-bold text-lg mt-8 speaker"> Speaker <%= speakerId %>
                         </div>
-                <div class="text-sm  speaker">
+                <div  class="text-sm  speaker">
                      <%= Math.round(duration/60).toString().padStart(2, "0" ) + ":" +
                      Math.round(duration%60).toString().padStart(2, "0" ) %>
                 </div>
-                <div class="text-sm speaker">
+                <div  class="text-sm speaker">
                     <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
                 </div>
       
@@ -77,27 +65,52 @@
       </div>
     </div>
   </div>
-
+  <!------- Check-buttons----->
+  <div class="confidence-list">
+    <label class="switch"> <h1>Confidence</h1>
+      <input id="switch-button" type="checkbox"onclick="Check()">
+      <span class="slider round">	</span>
+    </label>
+    
+    <label class="switch"> <h1>Speaker Id</h1>
+      <input id="switch-button2" type="checkbox"onclick="Check2()">
+      <span class="slider round">	</span>
+    </label>
+  
+    <label class="switch"> <h1>Punctuation</h1>
+      <input id="switch-button3" type="checkbox"onclick="Check3()">
+      <span class="slider round">	</span>
+    </label>
+  
+    <label class="switch"> <h1>Numeral</h1>  
+      <input id="switch-button4" type="checkbox"onclick="Check()">
+      <span class="slider round">	</span>
+    </label>
+  </div>  
   <!------- Output In Boxes ---------->
-  <div class="boxes">
+  <div hidden class="boxes">
 
-        <div class="words-box">
-                <h1>Words In Audio file</h1> 
+        <div hidden class="words-box">
+                <h1 hidden id="a">Words In Audio file</h1> 
                 <!-- <span class="tooltiptext"> done</span> -->
                 <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
-                <span style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
+                <span hidden id='b' style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
                 <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-                <span class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+                <span hidden class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
 
                 <% } %>
         </div>  
 
-        <div class="side-box"> 
-              <h3>Response</h3>
-                    <div class="sidewords">
-                      <pre id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
+        <div hidden class="side-box"> 
+              <h3 hidden id="c">Response</h3>
+                    <div hidden class="sidewords">
+                      <pre hidden id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
 
-                          <pre id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(({word})=>  word )) %> </pre>
+                          <pre hidden id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word, speaker_confidence: o.speaker_confidence , confidence: o.confidence}))) %> </pre>
+
+                                <pre hidden id="div3">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({speaker: o.speaker, speaker_confidence: o.speaker_confidence}))) %> </pre>
+
+                                      <pre hidden id="div4">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
                     </div>
                     <!-- <pre id="div2"> HEllo</pre> -->  
@@ -110,19 +123,20 @@
 <% }); %>
 
 <!--------Text Editor ------>
-<div class="area">
+<div hidden class="area">
         <!---copy--button-->
-        <button class="copy" onclick="copyToClip()">
+        <button hidden class="copy" onclick="copyToClip()">
                Copy the stuff
         </button>
 
               <!-- Download button-->
-              <button class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+              <button hidden class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
 
 <!------------Text Editor Content----->
-  <p id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
+  <p hidden id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
   </div>
 
+        
       <!----------CSS Stylr---------->
 <style>
   .here{
@@ -263,14 +277,21 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
 
  <!-- Playback Speed -->
 <script>
- var audio = document.getElementById("adi");
+var audio = document.getElementById("adi");
 function setPlaySpeed(speed) {
   audio.playbackRate = speed;
-} 
+  // alert( audio.playbackRate);
+}
+$(".dropdown-content button").click(function(){
+  
+  $(".dropbtn:first-child").html($(this).text()+' <span class="caret"></span>');
+  
+});
+
 
 
 // CheckBox
-
+// 1 Confidence
 function Check() {
   // Get the checkbox
   var checkBox = document.getElementById("switch-button");
@@ -287,7 +308,111 @@ var text1 = document.getElementById("div2");
     text1.style.display = "none";
   }
 }
+
+// 2 Speaerid
+function Check2() {
+  // Get the checkbox
+  var checkBox = document.getElementById("switch-button2");
+  // Get the output text
+  var text = document.getElementById("div1");
+var text1 = document.getElementById("div2");
+var text2 = document.getElementById("div3");
+
+  // If1 the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "none";
+    text1.style.display = "none";
+    text2.style.display = "block";
+
+    
+  } else {  
+  text.style.display = "block"
+    text1.style.display = "none";
+    text2.style.display = "none";
+
+  }
+}
+
+
+// 3 Punctuation
+
+
+function Check3() {
+  // Get the checkbox
+  var checkBox = document.getElementById("switch-button3");
+  // Get the output text
+  var text = document.getElementById("div1");
+var text1 = document.getElementById("div2");
+var text2 = document.getElementById("div3");
+var text3 = document.getElementById("div4");
+
+  // If1 the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "none";
+    text1.style.display = "none";
+    text2.style.display = "none";
+    text3.style.display = "block";
+
+    
+  } else {  
+  text.style.display = "block"
+    text1.style.display = "none";
+    text2.style.display = "none";
+    text3.style.display = "none";
+  }
+}
 </script>  
+
+
+<!-------------On click Enable event---------->
+
+<script>
+  $(document).ready(function(){
+        $("#submit").click(function(){
+        // $(".flex flex-col items-center parent").show();
+        // $("#adi").show();
+        // $(".flex_bold").show();
+        // $(".flex flex-row space-x-8 flex-wrap mt-16").show();
+        // $(".font-bold text-lg mt-8 speaker").show();
+        // $(".text-sm  speaker").show();
+        // $(".text-sm speaker").show();
+        // $(".dropdown").show();
+        // $(".dropbtn").show();
+        // $(".dropdown-content").show();
+        // $(".confidence-list").show();
+        // $(".switch").show();
+        // $("#switch-button").show();
+        // $(".slider round").show();
+        // $("#switch-button2").show();
+        // $("#switch-button3").show();
+        // $("#switch-button4").show();
+        $(".boxes").show();
+        $(".words-box").show();
+        $("#a").show();
+        $("#b").show();
+        $(".words").show();
+        $(".side-box").show();
+        $("#c").show();
+        $(".sidewords").show();
+        // $("#div1").show();
+        // $("#div2").show();
+        // $("#div3").show();
+        // $("#div4").show();
+        $(".area").show();
+        $(".copy").show();
+        $(".btn").show();
+        $("#foo").show();
+        // $("#x").show();
+        // $("#y").show();
+        // $("#z").show();
+        // $("#q").show();
+        // $("#w").show();
+        $("#submit").hide();
+        // $(".abc").hide();
+
+            });
+        });
+</script>
 
 
 
