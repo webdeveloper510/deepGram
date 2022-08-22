@@ -92,7 +92,7 @@ audio {
 }
 
 .parent {
-    padding: 4rem 2rem 2rem;
+    padding: 3em 2rem 2rem;
 }
 
 .side-box h3 {
@@ -157,7 +157,7 @@ p {
 }
 
 .boxes {
-    display: none;
+    display: inline-flex;
 }
 
 .boxes:nth-child(2) {
@@ -249,6 +249,12 @@ button {
     min-width: 150px;
     padding: 14px 12px;
     line-height: 1;
+    margin-bottom: 1px;
+    margin-left: 0;
+}
+
+area button {
+    margin-bottom: 0;
 }
 .area button.copy:hover{
     background-color: #ada11e;
@@ -358,6 +364,7 @@ button {
 }
 .flex_bold {
     display: flex;
+    justify-content: center;
 }
   
 .dropdown {
@@ -449,6 +456,11 @@ button {
 
 #file-name {
     padding-left: 20px;
+    padding-top: 30px;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    text-decoration: underline;
 }
 
 #url-form form {
@@ -522,13 +534,16 @@ button {
 .confidence-list {
     display: flex;
     width: 100%;
-    margin: 20px 0 15px;
+    margin: 20px 0 45px;
+    justify-content: center;
 }
 
 .confidence-list label {
     display: flex;
     align-items: center;
     width: 25%;
+    max-width: 230px;
+    justify-content: center;
 }
 
 .confidence-list label h1 {
@@ -541,6 +556,7 @@ button {
     top: 0;
     left: 0;
 }
+
 
 /**************Before ******************/
 
@@ -557,7 +573,7 @@ button {
     font-weight: bold;
     /* transition: 0.9s; */
     text-align: center;
-    margin: 46px 0 0 27pc;
+    margin: 0px 0 0 27pc;
     background: #ff0;
     outline: none;
     border: none;
@@ -583,3 +599,73 @@ pre#div3 {
     white-space: pre-wrap;
     line-height: 3;
 }
+
+
+button#submit1 {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: bold;
+    /* transition: 0.9s; */
+    text-align: center;
+    margin: 15px 0 0 27pc;
+    background: #ff0;
+    outline: none;
+    border: none;
+    border-radius: 34px;
+    cursor: pointer;
+}
+button#submit1:hover{
+    background: #d2da07;
+    color: #000;
+}
+span#font{
+    width: fit-content;
+    min-width: 160px;
+    height: fit-content;
+    padding: 7px;
+    border-radius: 5px;
+    margin-left: 0;
+    background: #04aa6d;
+}
+label#bold{
+    width: 11%;
+    float: left;
+    background: #ef4822;
+    text-align: center;
+    padding: 2px 4px;
+    color: #fff;
+    border-radius: 20px;
+}
+
+#flex {
+    padding-top: 4rem;
+}
+
+#flex .transcript-button {
+    margin-top: 15px;
+}
+
+@media only screen and (min-width: 768px) {
+    .browse {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .browse #bold {
+        margin-left: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 40px;
+        font-weight: bold;
+    }
+}
+
+
+
+

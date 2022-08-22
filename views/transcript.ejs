@@ -21,13 +21,27 @@
 <body>
  
 <!--------before-----click------->
-<div class="abc"> 
-  <h1><%= JSON.stringify(filename) %></h1>
-<button type="submit" id="submit" > 
-Analyze</button>
+<form   id="flex" action="/" enctype="multipart/form-data" method="POST">
+  <div class="browse">
+    <span   id="font">FROM YOUR DEVICE:</span>
+    <input   hidden type="file" id="file-input" name="file" required  />
+
+  
+  <label   id="bold"
+    for="file-input" id="file-input-label">
+    Browse Files
+  </label>
+  <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" ></div>
 </div>
 
 
+<div class="abc"> 
+  <h1 ><%= JSON.stringify(filename) %></h1>
+<button type="submit" id="submit" class="transcript-button" hidden > 
+Analyze</button>
+</div>
+
+<button type="submit" id="submit1">Show Results</button>
 <!---------After Click------Setup---------------->
 
 <div  class="flex flex-col items-center parent">
@@ -111,6 +125,9 @@ Analyze</button>
                                 <pre hidden id="div3">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({speaker: o.speaker, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
                                       <pre hidden id="div4">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence}))) %> </pre>
+
+                                              <pre hidden id="div5">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word , speaker: o.speaker ,  punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence , }))) %> </pre>
+
 
                     </div>
                     <!-- <pre id="div2"> HEllo</pre> -->  
@@ -368,7 +385,7 @@ var text3 = document.getElementById("div4");
 
 <script>
   $(document).ready(function(){
-        $("#submit").click(function(){
+        $("#submit1").click(function(){
         // $(".flex flex-col items-center parent").show();
         // $("#adi").show();
         // $(".flex_bold").show();
@@ -395,26 +412,101 @@ var text3 = document.getElementById("div4");
         $("#c").show();
         $(".sidewords").show();
         // $("#div1").show();
-        // $("#div2").show();
-        // $("#div3").show();
-        // $("#div4").show();
+        $("#submit").show();
+        $("#submit1").hide();
+        // $("#file-input-label").show();
         $(".area").show();
         $(".copy").show();
         $(".btn").show();
         $("#foo").show();
-        // $("#x").show();
-        // $("#y").show();
-        // $("#z").show();
-        // $("#q").show();
-        // $("#w").show();
-        $("#submit").hide();
+        $("#flex").show();
+        $("#font").show();
+        $("#bold").show();
+        // $("#file-input").show();
+        $("#file-name").show();
         // $(".abc").hide();
 
             });
         });
+
+        const fileName = document.querySelector("#file-name");
+        const fileInput = document.querySelector("#file-input");
+        fileInput.addEventListener("change", () => {
+          fileName.textContent = fileInput.files[0].name;
+          document
+        .querySelectorAll(".in-second-screen")
+        .forEach((node) => (node.hidden = false));
+    });
+
 </script>
 
+<script>
+  //1
+  $(document).ready(function () { 
+    var chkid = localStorage.getItem("chkId1");
+    if (chkid  === 'switch-button1') {
+      $('#switch-button').attr('checked', true);
+      $('#div2').show();
+    }
+    // else{
+    //   $('#div1').hide();
+    //   $('#div3').hide();
+    //   $('#div4').hide();
 
+    
+    // }  
+  });
+  //2
+  $(document).ready(function () { 
+    var chkid = localStorage.getItem("chkId2");
+    if (chkid  === 'switch-button2') {
+      $('#switch-button2').attr('checked', true);
+      $('#div3').show();
+    }
+    //   else{
+    //   $('#div1').hide();
+    //   $('#div2').hide();
+    //   $('#div4').hide();
+    
+    // }  
+  });
+  //3
+  $(document).ready(function () { 
+    var chkid = localStorage.getItem("chkId3");
+    if (chkid  === 'switch-button3') {
+      $('#switch-button3').attr('checked', true);
+      $('#div4').show();
+    }
+  //   else{
+  //   $('#div1').hide();
+  //   $('#div3').hide();
+  //   $('#div2').hide();
+  // }
+     
+  });
+  //4
+  $(document).ready(function () { 
+    var chkid = localStorage.getItem("chkId4");
+    if (chkid  === 'switch-button4') {
+      $('#switch-button4').attr('checked', true);
+    }  
+  });
+  //extra
+  // $(document).ready(function () { 
+  //   var chkid1 = localStorage.getItem("chkId1");
+  //   var chkid2 = localStorage.getItem("chkId2");
+  //   var chkid3 = localStorage.getItem("chkId3");
+  //   var chkid4 = localStorage.getItem("chkId4");
+  //   if (chkid4  === 'switch-button4' || chkid3 === 'switch-button3' || chkid2 === 'switch-button2'|| chkid1 === 'switch-button1')  {
+  //     $('#switch-button4' , '#switch-button3' ,'#switch-button2' , '#switch-button1' ).attr('checked', true);
+  //     // $('#switch-button3').attr('checked', true);
+  //     // $('#switch-button2').attr('checked', true);
+  //     // $('#switch-button').attr('checked', true);
+  //     $('#div5').show();
+  //   }  
+  // });
+
+</script>
 
 
       <!----------script---------->

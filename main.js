@@ -150,7 +150,7 @@ function error(res, error) {
  * Handle file upload. The file will be stored on the server's disk
  * before be sent to Deepgram API.
  */
-app.post("/analyze-file", upload.single("file"), async (req, res) => {
+app.post("/", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
       res.send({
@@ -192,7 +192,7 @@ app.post("/analyze-file", upload.single("file"), async (req, res) => {
 /**
  * Handle file upload from URL.
  */
-app.post("/analyze-url", async (req, res) => {
+app.post("/", async (req, res) => {
 
 
 
@@ -220,7 +220,7 @@ app.post("/analyze-url", async (req, res) => {
 });
 
 // Mock analyze results
-app.get("/analyze-test", async (_, res) => {
+app.get("/", async (_, res) => {
   res.render("transcript.ejs", {
     speakers: [12.5, 143.98],
     filename: "MyFile.mp3",
@@ -324,4 +324,3 @@ function addSpeakingTime(speaker, duration, timePerSpeaker ,res) {
 const listener = server.listen(process.env.PORT, () =>
   console.log(`Server is running on port ${process.env.PORT}`)
 );
-
