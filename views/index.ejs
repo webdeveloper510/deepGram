@@ -36,32 +36,40 @@
           </label>
           <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" hidden></div>
         <!-----checkbuttons--->
-  <div  hidden class="confidence-list">
-    <label  hidden class="switch1"> <h1 hidden id="a">Confidence</h1>
-      <a href="transcript.ejs">
-      <input  hidden id="switch-button1" type="checkbox" onclick="linkPageContact1(this.id)"></a>
-      <span  hidden class="sliderround1">	</span>
-    </label>
+  <div   class="confidence-list">
+    <!-- <label   class="switch1"> <h1  id="a">Confidence</h1>
+      <input   id="switch-button1" type="checkbox" onclick="linkPageContact()">
+      <span   class="sliderround1">	</span>
+    </label> -->
     
-    <label  hidden class="switch2"> <h1 hidden id="b">Speaker Id</h1>
-      <input  hidden id="switch-button2" type="checkbox" onclick="linkPageContact2(this.id)">
-      <span  hidden class="sliderround2">	</span>
+    <!-- <label   class="switch2"> <h1  id="b">Diarize </h1>
+      <input   id="switch-button2" type="checkbox" onclick="linkPageContact('diarize',this)">
+      <span   class="sliderround2">	</span>
+    </label> -->
+  
+    <label   class="switch3"> <h1  id="c">Punctuate</h1>
+      <input   id="switch-button3" type="checkbox" onclick="linkPageContact('punctuate',this)">
+      <span   class="sliderround3">	</span>
     </label>
   
-    <label  hidden class="switch3"> <h1 hidden id="c">Punctuation</h1>
-      <input  hidden id="switch-button3" type="checkbox" onclick="linkPageContact3(this.id)">
-      <span  hidden class="sliderround3">	</span>
+    <label   class="switch4"> <h1  id="d">Numeral</h1>  
+      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('numerals',this)">
+      <span   class="sliderround4">	</span>
     </label>
-  
-    <label  hidden class="switch4"> <h1 hidden id="d">Numeral</h1>  
-      <input  hidden id="switch-button4" type="checkbox"  onclick="linkPageContact4(this.id)">
-      <span  hidden class="sliderround4">	</span>
-    </label>
+
+    <!-- <label   class="switch4"> <h1  id="d">Utterances</h1>  
+      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('utterances',this)">
+      <span   class="sliderround4">	</span>
+    </label> -->
   </div>  
+  <input type="hidden" id="diarize" name="diarize" value="false">
+  <input type="hidden" id="punctuate" name="punctuate"  value="false">
+  <input type="hidden" id="numerals" name="numerals"  value="false">
+  <!-- <input type="hidden" id="utterances" name="utterances"  value="false"> -->
          <!------- Check-buttons----->
 
           <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" hidden>
-            Submit
+            Analyze
           </button>
         </form>
       </div>
@@ -72,7 +80,7 @@
             class="bg-darkcharcoal p-2 border border-casper border-solid rounded-md placeholder-steel w-60" name="url"
             placeholder="myremoteurl-file.com" required />
           <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
-            Submit
+            Analyze
           </button>
         </form>
       </div>
@@ -110,23 +118,23 @@
     const goBackButton = document.querySelector("#go-back-button");
 
 
-    const list = document.querySelector(".confidence-list");
-    const switch1 = document.querySelectorAll(".switch1");
-    const switch2 = document.querySelectorAll(".switch2");
-    const switch3 = document.querySelectorAll(".switch3");
-    const switch4 = document.querySelectorAll(".switch4");
-    const sliderround1 = document.querySelectorAll(".sliderround1");
-    const sliderround2= document.querySelectorAll(".sliderround2");
-    const sliderround3 = document.querySelectorAll(".sliderround3");
-    const sliderround4 = document.querySelectorAll(".sliderround4");
-    const a = document.querySelector("#a");
-    const b = document.querySelector("#b");
-    const c = document.querySelector("#c");
-    const d = document.querySelector("#d");
-    const sbtn = document.querySelector("#switch-button1");
-    const sbtn2 = document.querySelector("#switch-button2");
-    const sbtn3= document.querySelector("#switch-button3");
-    const sbtn4 = document.querySelector("#switch-button4");
+    // const list = document.querySelector(".confidence-list");
+    // const switch1 = document.querySelectorAll(".switch1");
+    // const switch2 = document.querySelectorAll(".switch2");
+    // const switch3 = document.querySelectorAll(".switch3");
+    // const switch4 = document.querySelectorAll(".switch4");
+    // const sliderround1 = document.querySelectorAll(".sliderround1");
+    // const sliderround2= document.querySelectorAll(".sliderround2");
+    // const sliderround3 = document.querySelectorAll(".sliderround3");
+    // const sliderround4 = document.querySelectorAll(".sliderround4");
+    // const a = document.querySelector("#a");
+    // const b = document.querySelector("#b");
+    // const c = document.querySelector("#c");
+    // const d = document.querySelector("#d");
+    // const sbtn = document.querySelector("#switch-button1");
+    // const sbtn2 = document.querySelector("#switch-button2");
+    // const sbtn3= document.querySelector("#switch-button3");
+    // const sbtn4 = document.querySelector("#switch-button4");
     urlInput.addEventListener("input", () => {
       fileForm.hidden = true;
       document
@@ -139,23 +147,23 @@
       urlForm.hidden = true;
       fileInputLabel.hidden = true;
       fileName.textContent = fileInput.files[0].name;
-      list.hidden = false;
-      switch1.hidden = false;
-      switch2.hidden = false;
-      switch3.hidden = false;
-      switch4.hidden = false;
-      sliderround1.hidden = false;
-      sliderround2.hidden = false;
-      sliderround3.hidden = false;
-      sliderround4.hidden = false;
-      a.hidden = false;
-      b.hidden = false;
-      c.hidden = false;
-      d.hidden = false;
-      sbtn.hidden = false;
-      sbtn2.hidden = false;
-      sbtn3.hidden = false;
-      sbtn4.hidden = false;
+      // list.hidden = false;
+      // switch1.hidden = false;
+      // switch2.hidden = false;
+      // switch3.hidden = false;
+      // switch4.hidden = false;
+      // sliderround1.hidden = false;
+      // sliderround2.hidden = false;
+      // sliderround3.hidden = false;
+      // sliderround4.hidden = false;
+      // a.hidden = false;
+      // b.hidden = false;
+      // c.hidden = false;
+      // d.hidden = false;
+      // sbtn.hidden = false;
+      // sbtn2.hidden = false;
+      // sbtn3.hidden = false;
+      // sbtn4.hidden = false;
       document
         .querySelectorAll(".in-second-screen")
         .forEach((node) => (node.hidden = false));
@@ -270,19 +278,23 @@
 //   }
 // }
 
-function linkPageContact1(clicked_id) {
-        localStorage.setItem("chkId1", clicked_id);
+function linkPageContact(param,element) {
+    var checked = $(element).is(':checked');
+   
+      $('#'+param).val(checked);
+  
+
       }
 
-function linkPageContact2(clicked_id) {
-  localStorage.setItem("chkId2", clicked_id);
-}
-function linkPageContact3(clicked_id) {
-  localStorage.setItem("chkId3", clicked_id);
-}
-function linkPageContact4(clicked_id) {
-  localStorage.setItem("chkId4", clicked_id);
-}
+// function linkPageContact2(clicked_id2) {
+//   localStorage.setItem("chkId", clicked_id2);
+// }
+// function linkPageContact3(clicked_id3) {
+//   localStorage.setItem("chkId", clicked_id3);
+// }
+// function linkPageContact4(clicked_id4) {
+//   localStorage.setItem("chkId", clicked_id4);
+// }
 
 </script>
 

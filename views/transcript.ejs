@@ -37,11 +37,11 @@
 
 <div class="abc"> 
   <h1 ><%= JSON.stringify(filename) %></h1>
-<button type="submit" id="submit" class="transcript-button" hidden > 
+<button type="submit" id="submit" class="transcript-button"  > 
 Analyze</button>
 </div>
-
-<button type="submit" id="submit1">Show Results</button>
+</form>
+<!-- <button type="submit" id="submit1">Show Results</button> -->
 <!---------After Click------Setup---------------->
 
 <div  class="flex flex-col items-center parent">
@@ -79,78 +79,105 @@ Analyze</button>
       </div>
     </div>
   </div>
-  <!------- Check-buttons----->
-  <div class="confidence-list">
-    <label class="switch"> <h1>Confidence</h1>
-      <input id="switch-button" type="checkbox"onclick="Check()">
-      <span class="slider round">	</span>
-    </label>
-    
-    <label class="switch"> <h1>Speaker Id</h1>
-      <input id="switch-button2" type="checkbox"onclick="Check2()">
-      <span class="slider round">	</span>
-    </label>
-  
-    <label class="switch"> <h1>Punctuation</h1>
-      <input id="switch-button3" type="checkbox"onclick="Check3()">
-      <span class="slider round">	</span>
-    </label>
-  
-    <label class="switch"> <h1>Numeral</h1>  
-      <input id="switch-button4" type="checkbox"onclick="Check()">
-      <span class="slider round">	</span>
-    </label>
-  </div>  
-  <!------- Output In Boxes ---------->
-  <div hidden class="boxes">
+  <div class="boxes-list-conainer">
+    <!------- Check-buttons----->
+    <div hidden class="confidence-list">
+      <!-- <label  hidden class="switch"> <h1 hidden >Confidence</h1>
+        
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+      </label>
+      
+      <label   class="switch"> <h1  >Speaker </h1>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+      </label> -->
+      <% if (body.punctuate=='true' ) { %>
+      <label   class="switch"> <h1  >Punctuate</h1>
+   
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+     
+      </label>
+      <% } %>
+      <% if (body.numerals=='true' ) { %>
+      <label  hidden class="switch"> <h1 >Numeral</h1>  
+ 
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+      
+      </label>
+      <% } %>
+    </div>  
+    <!------- Output In Boxes ---------->
+    <div  class="boxes">
+      <div class="word-box2">
+        <h1  id="a">Actual Respose</h1> 
 
-        <div hidden class="words-box">
-                <h1 hidden id="a">Words In Audio file</h1> 
-                <!-- <span class="tooltiptext"> done</span> -->
-                <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
-                <span hidden id='b' style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
-                <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-                <span hidden class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+        <!-- <span  id='b' style="color:#fff"><%= transcriptionOriginal.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span> -->
+        <% for (var i = 0; i < transcriptionOriginal.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+          <span id="abcdef" class="words" end="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].start %>">   <%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %> </span>
+          <% } %>
+      </div>
+          <div  class="words-box">
+                  <h1  id="a">Request Response</h1> 
+                  <!-- <span class="tooltiptext"> done</span> -->
+                  <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
+                  <span  id='b' style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
+                  <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+                    <span  hidden id= 'pu'class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>" >   <%= transcription.results.channels[0].alternatives[0].words[i].word %></span>
+                  
+                  
+                  <article hidden id="sp-pu">
+                  
+                  <span><p hidden class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].punctuated_word %></p>
+                  </span>
+  </article>
 
-                <% } %>
-        </div>  
+                  <% } %>
+          </div>  
+    </div>
+    <div class="boxyz">
+          <div  class="side-box"> 
+                <h3  id="c">Response</h3>
+                      <div  class="sidewords">
+                        <pre  id="div1">   <%= JSON.stringify(transcriptionOriginal , null, 3) %> </pre>
 
-        <div hidden class="side-box"> 
-              <h3 hidden id="c">Response</h3>
-                    <div hidden class="sidewords">
-                      <pre hidden id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
+                            <!-- <pre hidden id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word, speaker_confidence: o.speaker_confidence , confidence: o.confidence}))) %> </pre>
 
-                          <pre hidden id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word, speaker_confidence: o.speaker_confidence , confidence: o.confidence}))) %> </pre>
+                                  <pre hidden id="div3">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({speaker: o.speaker, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
-                                <pre hidden id="div3">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({speaker: o.speaker, speaker_confidence: o.speaker_confidence}))) %> </pre>
+                                        <pre hidden id="div4">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
-                                      <pre hidden id="div4">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence}))) %> </pre>
-
-                                              <pre hidden id="div5">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word , speaker: o.speaker ,  punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence , }))) %> </pre>
+                                                <pre hidden id="div5">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word , speaker: o.speaker ,  punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence , }))) %> </pre> -->
 
 
+                      </div>
                     </div>
-                    <!-- <pre id="div2"> HEllo</pre> -->  
 
-        </div>
+          <div  class="side-box2"> 
+            <h3  id="c">Response</h3>
+                  <div  class="sidewords2">
+                    <pre  id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
+                  </div>
+                      <!-- <pre id="div2"> HEllo</pre> -->  
+
+          </div>
 
 
-</div>
+    </div>
+  </div>
 
 <% }); %>
 
 <!--------Text Editor ------>
-<div hidden class="area">
+<div  class="area">
         <!---copy--button-->
-        <button hidden class="copy" onclick="copyToClip()">
+        <button  class="copy" onclick="copyToClip()">
                Copy the stuff
         </button>
 
               <!-- Download button-->
-              <button hidden class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+              <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
 
 <!------------Text Editor Content----->
-  <p hidden id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
+  <p  id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
   </div>
 
         
@@ -255,10 +282,10 @@ Analyze</button>
 async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     {
     	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/plain'}); 
-
+      // console.log('abc',textFileAsBlob)  
     	var downloadLink = document.createElement("a");
       var aa = await textFileAsBlob.text();
-      console.log(aa);
+      // console.log("aya" ,aa);
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
@@ -266,20 +293,23 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Chrome allows the link to be clicked
     		// without actually adding it to the DOM.
     		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        // console.log('href' ,downloadLink.href);
+
     	}
     	else
     	{
     		// Firefox requires the link to be added to the DOM
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        // console.log('href' ,downloadLink.href);
 
     		downloadLink.onclick = destroyClickedElement;
-    	////	downloadLink.style.display = "none";
+    		downloadLink.style.display = "none";
     		document.body.appendChild(downloadLink);
     	}
-      console.log(window.URL.createObjectURL(textFileAsBlob))
+      // console.log('real' ,window.URL.createObjectURL(textFileAsBlob))
     
-    	//downloadLink.click();
+    	downloadLink.click();
     }
 
        
@@ -309,43 +339,47 @@ $(".dropdown-content button").click(function(){
 
 // CheckBox
 // 1 Confidence
-function Check() {
-  // Get the checkbox
-  var checkBox = document.getElementById("switch-button");
-  // Get the output text
-  var text = document.getElementById("div1");
-var text1 = document.getElementById("div2");
-  // If1 the checkbox is checked, display the output text
-  if (checkBox.checked == true){
-    text.style.display = "none";
-    text1.style.display = "block";
+// function Check() {
+//   // Get the checkbox
+//   var checkBox = document.getElementById("switch-button");
+//   // Get the output text
+//   var text = document.getElementById("div1");
+// var text1 = document.getElementById("div2");
+//   // If1 the checkbox is checked, display the output text
+//   if (checkBox.checked == true){
+//     text.style.display = "none";
+//     text1.style.display = "block";
     
-  } else {  
-  text.style.display = "block"
-    text1.style.display = "none";
-  }
-}
+//   } else {  
+//   text.style.display = "block"
+//     text1.style.display = "none";
+//   }
+// }
 
 // 2 Speaerid
 function Check2() {
   // Get the checkbox
   var checkBox = document.getElementById("switch-button2");
   // Get the output text
-  var text = document.getElementById("div1");
-var text1 = document.getElementById("div2");
-var text2 = document.getElementById("div3");
+//   var text = document.getElementById("div1");
+// var text1 = document.getElementById("div2");
+// var text2 = document.getElementById("div3");
+var box3 = document.getElementById("sp");
 
   // If1 the checkbox is checked, display the output text
   if (checkBox.checked == true){
-    text.style.display = "none";
-    text1.style.display = "none";
-    text2.style.display = "block";
+//     text.style.display = "none";
+//     text1.style.display = "none";
+//     text2.style.display = "block";
+  box3.style.display = "block";
 
     
   } else {  
-  text.style.display = "block"
-    text1.style.display = "none";
-    text2.style.display = "none";
+//   text.style.display = "block"
+//     text1.style.display = "none";
+//     text2.style.display = "none";
+box3.style.display = "none";
+
 
   }
 }
@@ -358,34 +392,46 @@ function Check3() {
   // Get the checkbox
   var checkBox = document.getElementById("switch-button3");
   // Get the output text
-  var text = document.getElementById("div1");
-var text1 = document.getElementById("div2");
-var text2 = document.getElementById("div3");
-var text3 = document.getElementById("div4");
+//   var text = document.getElementById("div1");
+// var text1 = document.getElementById("div2");
+// var text2 = document.getElementById("div3");
+// var text3 = document.getElementById("div4");
+var box2 = document.getElementById("sp-pu");
+var box1 = document.getElementById("si");
 
   // If1 the checkbox is checked, display the output text
   if (checkBox.checked == true){
-    text.style.display = "none";
-    text1.style.display = "none";
-    text2.style.display = "none";
-    text3.style.display = "block";
+//     text.style.display = "none";
+//     text1.style.display = "none";
+//     text2.style.display = "none";
+//     text3.style.display = "block";
+    box2.style.display = "block";
+    box1.style.display = "none";
+
 
     
   } else {  
-  text.style.display = "block"
-    text1.style.display = "none";
-    text2.style.display = "none";
-    text3.style.display = "none";
+//   text.style.display = "block"
+//     text1.style.display = "none";
+//     text2.style.display = "none";
+//     text3.style.display = "none";
+box2.style.display = "none";
+    box1.style.display = "block ";
   }
 }
+
+
+// Extra 
+
+
 </script>  
 
 
 <!-------------On click Enable event---------->
 
 <script>
-  $(document).ready(function(){
-        $("#submit1").click(function(){
+  // $(document).ready(function(){
+        // $("#submit1").click(function(){
         // $(".flex flex-col items-center parent").show();
         // $("#adi").show();
         // $(".flex_bold").show();
@@ -403,31 +449,31 @@ var text3 = document.getElementById("div4");
         // $("#switch-button2").show();
         // $("#switch-button3").show();
         // $("#switch-button4").show();
-        $(".boxes").show();
-        $(".words-box").show();
-        $("#a").show();
-        $("#b").show();
-        $(".words").show();
-        $(".side-box").show();
-        $("#c").show();
-        $(".sidewords").show();
+        // $(".boxes").show();
+        // $(".words-box").show();
+        // $("#a").show();
+        // $("#b").show();
+        // $(".words").show();
+        // $(".side-box").show();
+        // $("#c").show();
+        // $(".sidewords").show();
         // $("#div1").show();
-        $("#submit").show();
-        $("#submit1").hide();
+        // $("#submit").show();
+        // $("#submit1").hide();
         // $("#file-input-label").show();
-        $(".area").show();
-        $(".copy").show();
-        $(".btn").show();
-        $("#foo").show();
-        $("#flex").show();
-        $("#font").show();
-        $("#bold").show();
+        // $(".area").show();
+        // $(".copy").show();
+        // $(".btn").show();
+        // $("#foo").show();
+        // $("#flex").show();
+        // $("#font").show();
+        // $("#bold").show();
         // $("#file-input").show();
-        $("#file-name").show();
+        // $("#file-name").show();
         // $(".abc").hide();
 
-            });
-        });
+        //     });
+        // });
 
         const fileName = document.querySelector("#file-name");
         const fileInput = document.querySelector("#file-input");
@@ -443,73 +489,88 @@ var text3 = document.getElementById("div4");
 <script>
   //1
   $(document).ready(function () { 
-    var chkid = localStorage.getItem("chkId1");
+    var chkid = localStorage.getItem("chkId");
     if (chkid  === 'switch-button1') {
-      $('#switch-button').attr('checked', true);
-      $('#div2').show();
+      $('#switch-button1').attr('checked', true);
+      // $('#div2').show();
     }
-    // else{
-    //   $('#div1').hide();
-    //   $('#div3').hide();
-    //   $('#div4').hide();
-
-    
-    // }  
   });
   //2
   $(document).ready(function () { 
-    var chkid = localStorage.getItem("chkId2");
-    if (chkid  === 'switch-button2') {
+    var chkid2 = localStorage.getItem("chkId");
+    if (chkid2  === 'switch-button2') {
       $('#switch-button2').attr('checked', true);
-      $('#div3').show();
-    }
-    //   else{
-    //   $('#div1').hide();
-    //   $('#div2').hide();
-    //   $('#div4').hide();
-    
-    // }  
+      // $('#div3').show();
+      $('#sp').show();
+    }  
   });
   //3
   $(document).ready(function () { 
-    var chkid = localStorage.getItem("chkId3");
-    if (chkid  === 'switch-button3') {
+    var chkid3 = localStorage.getItem("chkId");
+    if (chkid3  === 'switch-button3') {
       $('#switch-button3').attr('checked', true);
-      $('#div4').show();
-    }
-  //   else{
-  //   $('#div1').hide();
-  //   $('#div3').hide();
-  //   $('#div2').hide();
-  // }
-     
+      // $('#div4').show();
+      $('#pu').show();
+    }     
   });
   //4
-  $(document).ready(function () { 
-    var chkid = localStorage.getItem("chkId4");
-    if (chkid  === 'switch-button4') {
-      $('#switch-button4').attr('checked', true);
-    }  
-  });
-  //extra
   // $(document).ready(function () { 
-  //   var chkid1 = localStorage.getItem("chkId1");
-  //   var chkid2 = localStorage.getItem("chkId2");
-  //   var chkid3 = localStorage.getItem("chkId3");
-  //   var chkid4 = localStorage.getItem("chkId4");
-  //   if (chkid4  === 'switch-button4' || chkid3 === 'switch-button3' || chkid2 === 'switch-button2'|| chkid1 === 'switch-button1')  {
-  //     $('#switch-button4' , '#switch-button3' ,'#switch-button2' , '#switch-button1' ).attr('checked', true);
-  //     // $('#switch-button3').attr('checked', true);
-  //     // $('#switch-button2').attr('checked', true);
-  //     // $('#switch-button').attr('checked', true);
-  //     $('#div5').show();
-  //   }  
+  //   var chkid4 = localStorage.getItem("chkId");
+  //   if (chkid4  === 'switch-button4') {
+  //     $('#switch-button4').attr('checked', true);
+  //   } 
+  // });
+  //extra
+
+  // $(document).ready(function () { 
+  //   var chkid3 = localStorage.getItem("chkId");
+  //   var chkid2 = localStorage.getItem("chkId");
+  //   if (chkid2  === 'switch-button2' || chkid3 === 'switch-button3') {
+  //     $('#switch-button2').attr('checked', true);
+  //     $('#switch-button3').attr('checked', true);
+  //     $('#sp'),show();
+  //   console.log('done');
+  //   } 
+  // });
+  // $(document).ready(function () { 
+    // var chkid = localStorage.getItem("chkId");
+    // var chkidy = localStorage.getItem("chkId");
+    // var chkidx = localStorage.getItem("chkId");
+    // var chkidw = localStorage.getItem("chkId");
+    // if (chkido  === 'switch-button4' || chkidl === 'switch-button3' || chkidp === 'switch-button2'|| chkid === 'switch-button1')  {
+      // $('#switch-button3').attr('checked', true);
+      // $('#switch-button2').attr('checked', true);
+      // $('#switch-button').attr('checked', true);
+      // $('#switch-button4').attr('checked', true);
+      // $('#div5').show();
+    // } 
+
+    // else if (chkid  !== 'switch-button4' || chkid !== 'switch-button3' || chkid !== 'switch-button2'|| chkid !== 'switch-button1'){
+    //   $('#switch-button3').attr('checked', false);
+    //   $('#switch-button2').attr('checked', false);
+    //   $('#switch-button').attr('checked', false);
+    //   $('#switch-button4').attr('checked', false);
+    // }
+    // else{
+    //   alert('Kindly Check Manualy.')
+    // }
   // });
 
+
+  // $(document).ready(function () { 
+  //   var chkid = localStorage.getItem("chkId");
+  //   if (chkid  != 'switch-button' && chkid != 'switch-button2' && chkid != 'switch-button3' && chkid != 'switch-button4') {
+  //     $('#switch-button3').attr('checked', false);
+  //     $('#switch-button2').attr('checked', false);
+  //     $('#switch-button').attr('checked', false);
+  //     $('#switch-button4').attr('checked', false);
+  //     $('#div1').show();
+  //   }     
+  // });
 </script>
 
 
-      <!----------script---------->
- 
+        <!----------script---------->
+  
 </body>
 </html>

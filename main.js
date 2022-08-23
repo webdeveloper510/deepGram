@@ -85,7 +85,7 @@ app.get("/", (req, res) => {
  * ; payload: Buffer | string
  * }} params
  */
-async function requestDeepgramAPI({ res, filename, fileUrl, contentType, payload , }) {
+async function requestDeepgramAPI({ res, filename, contentType, payload , body }) {
 
 
   try {
@@ -96,7 +96,7 @@ async function requestDeepgramAPI({ res, filename, fileUrl, contentType, payload
     if (typeof payload === 'string') {
       audioObj = { url: fileUrl };
     } else {
-      audioObj = { buffer: payload, mimetype: contentType };
+      audioObj = { buffer: payload, mimetype: contentType  };
     }
 
   // const author =  transcript.results.channels[0].alternatives[0].words;
@@ -108,25 +108,25 @@ async function requestDeepgramAPI({ res, filename, fileUrl, contentType, payload
 
 
     const transcription = await deepgram.transcription.preRecorded(audioObj, {
-      punctuate: true,
-      diarize: true,
+      punctuate: body.punctuate =='false' ? false : true,
+      //diarize: body.diarize =='false' ? false : true,
+      numerals:body.numerals =='false' ? false : true,
     });
-    // console.log("pu" , transcription.results.channels[0].alternatives[0].words)
-    // console.log("file" , file)
-    //console.log("transcription==============>",transcription)
-    console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].transcript)
 
-    // console.log('file:' , filename)
-
+    const transcriptionOriginal = await deepgram.transcription.preRecorded(audioObj);
+    //console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].words)
     const speakers = computeSpeakingTime(transcription  );
-    return {speakers,transcription  , fileUrl , filename};
+    //res.send(transcription)
+    return {speakers,transcription  ,transcriptionOriginal , filename};
 
-    res.render("transcript.ejs", {
-      speakers,
-      filename,
-      fileUrl,
+    // res.render("transcript.ejs", {
+    //   speakers,
+    //   transcription,
+    //   transcriptionOriginal,
+    //   filename,
+    //   fileUrl,
 
-    });
+    // });
   }
   catch (err) {
     error(res, err);
@@ -151,6 +151,7 @@ function error(res, error) {
  * before be sent to Deepgram API.
  */
 app.post("/", upload.single("file"), async (req, res) => {
+  const {diarize, puctuate,numerals} = req.body;
   try {
     if (!req.file) {
       res.send({
@@ -172,14 +173,15 @@ app.post("/", upload.single("file"), async (req, res) => {
         }
         // When we have the file content, we forward
         // it to Deepgram API.
-        const {speakers,transcription} = await requestDeepgramAPI({
+        const {speakers,transcription  ,transcriptionOriginal , filename} = await requestDeepgramAPI({
           res,
           filename: file.originalname,
           fileUrl,
           contentType: file.mimetype,
           payload: data,
+          body:req.body
         });
-        res.render("transcript.ejs",{speakers,transcription , fileUrl , filename});
+        res.render("transcript.ejs",{speakers,transcription ,transcriptionOriginal, fileUrl , filename,body:req.body});
        // console.log(words);
       });
      
