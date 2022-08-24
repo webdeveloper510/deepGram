@@ -85,7 +85,7 @@ app.get("/", (req, res) => {
  * ; payload: Buffer | string
  * }} params
  */
-async function requestDeepgramAPI({ res, filename, contentType, payload , body }) {
+async function requestDeepgramAPI({ res, filename, contentType, payload , body  ,}) {
 
 
   try {
@@ -108,16 +108,22 @@ async function requestDeepgramAPI({ res, filename, contentType, payload , body }
 
 
     const transcription = await deepgram.transcription.preRecorded(audioObj, {
+      utterances: body.utterances =='false' ? false : true,
       punctuate: body.punctuate =='false' ? false : true,
-      //diarize: body.diarize =='false' ? false : true,
+      diarize: body.diarize =='false' ? false : true,
       numerals:body.numerals =='false' ? false : true,
+      //utt_split:0.8
     });
 
+
     const transcriptionOriginal = await deepgram.transcription.preRecorded(audioObj);
-    //console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].words)
+    // console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].words);
+    // console.log("transcription.results==============>",transcriptionOriginal.results.utterances|"[Speaker:\(.speaker)] \(.transcript)")
+    // console.log("transcription.results==============>",transcription.results.)
     const speakers = computeSpeakingTime(transcription  );
-    //res.send(transcription)
+    // res.send(transcription)
     return {speakers,transcription  ,transcriptionOriginal , filename};
+    // console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].words)
 
     // res.render("transcript.ejs", {
     //   speakers,
@@ -151,7 +157,7 @@ function error(res, error) {
  * before be sent to Deepgram API.
  */
 app.post("/", upload.single("file"), async (req, res) => {
-  const {diarize, puctuate,numerals} = req.body;
+  const {diarize, puctuate,numerals , utterances} = req.body;
   try {
     if (!req.file) {
       res.send({
@@ -173,7 +179,7 @@ app.post("/", upload.single("file"), async (req, res) => {
         }
         // When we have the file content, we forward
         // it to Deepgram API.
-        const {speakers,transcription  ,transcriptionOriginal , filename} = await requestDeepgramAPI({
+        const {speakers,transcription  ,transcriptionOriginal  , filename} = await requestDeepgramAPI({
           res,
           filename: file.originalname,
           fileUrl,
@@ -181,7 +187,7 @@ app.post("/", upload.single("file"), async (req, res) => {
           payload: data,
           body:req.body
         });
-        res.render("transcript.ejs",{speakers,transcription ,transcriptionOriginal, fileUrl , filename,body:req.body});
+        res.render("transcript.ejs",{speakers,transcription ,transcriptionOriginal, fileUrl ,filename,body:req.body});
        // console.log(words);
       });
      
@@ -248,7 +254,7 @@ app.get("/", async (_, res) => {
 
 function computeSpeakingTime(transcript ,res ) {
   const words =  transcript.results.channels[0].alternatives[0].words;
-  //console.log(words)
+  // console.log(words)
   if (words.length === 0) {
     return[];
   }

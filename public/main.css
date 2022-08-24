@@ -1056,3 +1056,27 @@ body div .flex .speaker{
 body .boxes-list-conainer .boxyz {
   flex-direction: row;
 }
+
+.words-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.words-box h1 {
+  width: 100%;
+}
+
+span.words {
+  padding: 0 2px;
+  width: fit-content !important;
+  margin-top: 0 !important;
+}
+
+.words-box span {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.word-box2 {
+  height: fit-content;
+}

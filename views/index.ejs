@@ -42,10 +42,10 @@
       <span   class="sliderround1">	</span>
     </label> -->
     
-    <!-- <label   class="switch2"> <h1  id="b">Diarize </h1>
+    <label   class="switch2"> <h1  id="b">Diarize </h1>
       <input   id="switch-button2" type="checkbox" onclick="linkPageContact('diarize',this)">
       <span   class="sliderround2">	</span>
-    </label> -->
+    </label>
   
     <label   class="switch3"> <h1  id="c">Punctuate</h1>
       <input   id="switch-button3" type="checkbox" onclick="linkPageContact('punctuate',this)">
@@ -57,15 +57,15 @@
       <span   class="sliderround4">	</span>
     </label>
 
-    <!-- <label   class="switch4"> <h1  id="d">Utterances</h1>  
+    <label   class="switch4"> <h1  id="d">Utterances</h1>  
       <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('utterances',this)">
       <span   class="sliderround4">	</span>
-    </label> -->
+    </label>
   </div>  
   <input type="hidden" id="diarize" name="diarize" value="false">
   <input type="hidden" id="punctuate" name="punctuate"  value="false">
   <input type="hidden" id="numerals" name="numerals"  value="false">
-  <!-- <input type="hidden" id="utterances" name="utterances"  value="false"> -->
+  <input type="hidden" id="utterances" name="utterances"  value="false">
          <!------- Check-buttons----->
 
           <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" hidden>
@@ -280,7 +280,7 @@
 
 function linkPageContact(param,element) {
     var checked = $(element).is(':checked');
-   
+    console.log(checked);
       $('#'+param).val(checked);
   
 

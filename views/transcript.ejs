@@ -82,14 +82,23 @@ Analyze</button>
   <div class="boxes-list-conainer">
     <!------- Check-buttons----->
     <div hidden class="confidence-list">
-      <!-- <label  hidden class="switch"> <h1 hidden >Confidence</h1>
+      <% if (body.utterances=='true' ) { %>
+
+      <label  hidden class="switch"> <h1  >Utterances</h1>
         
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
+      <% } %>
       
-      <label   class="switch"> <h1  >Speaker </h1>
+      <% if (body.diarize=='true' ) { %>
+      
+      <label   class="switch"> <h1  >Diarize </h1>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
-      </label> -->
+      </label> 
+      
+      <% } %>
+
+
       <% if (body.punctuate=='true' ) { %>
       <label   class="switch"> <h1  >Punctuate</h1>
    
@@ -117,18 +126,33 @@ Analyze</button>
       </div>
           <div  class="words-box">
                   <h1  id="a">Request Response</h1> 
-                  <!-- <span class="tooltiptext"> done</span> -->
-                  <!-- <p ><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %> </p> -->
-                  <span  id='b' style="color:#fff"><%= transcription.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span>
-                  <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-                    <span  hidden id= 'pu'class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>" >   <%= transcription.results.channels[0].alternatives[0].words[i].word %></span>
+                  <% if (body.utterances=='false' && body.diarize=='true'  ) { %>
+                    <%  var speaker = transcription.results.channels[0].alternatives[0].words[0].speaker %> 
+                    <span style="color:white; display: inherit;"><b>Speaker <%= speaker %></b></span>
+                    <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+                     <% if(speaker!=transcription.results.channels[0].alternatives[0].words[i].speaker){ %>
+                       <span style="color:white"><b>Speaker <%= speaker %></b></span>
+                       <%   speaker = transcription.results.channels[0].alternatives[0].words[i].speaker %> 
+                       <% }  %>
+                     <span   style="color:white"  class="words" >   <%= transcription.results.channels[0].alternatives[0].words[i].word %></span> 
+                     <% } %>
+                  <!-- <p ><%= transcription.results.channels[0].alternatives[0].transcript %> </p> -->
+                  <% } else { %>
+                    <%  var speaker = transcription.results.utterances[0].speaker %> 
+                   <span style="color:white"><b>Speaker <%= speaker %></b></span>
+                   <% for (var i = 0; i < transcription.results.utterances.length;  i++ ) { %>
+                    <% if(speaker!=transcription.results.utterances[i].speaker){ %>
+                      <span style="color:white"><b>Speaker <%= speaker %></b></span>
+                      <%   speaker = transcription.results.utterances[i].speaker %> 
+                      <% }  %>
+                    <p   class="words" >   <%= transcription.results.utterances[i].transcript %></p> 
+                    <% } %>
                   
-                  
-                  <article hidden id="sp-pu">
+                  <!-- <article hidden id="sp-pu">
                   
                   <span><p hidden class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].punctuated_word %></p>
                   </span>
-  </article>
+  </article> -->
 
                   <% } %>
           </div>  
