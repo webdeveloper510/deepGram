@@ -68,12 +68,12 @@
   <input type="hidden" id="utterances" name="utterances"  value="false">
          <!------- Check-buttons----->
 
-          <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" hidden>
+          <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
             Analyze
           </button>
         </form>
       </div>
-      <div id="url-form">
+      <!-- <div id="url-form">
         <form class="flex flex-col space-y-3" action="/" method="POST">
           <span class="font-bold text-sm">FROM AN URL:</span>
           <input type="text" id="url-input"
@@ -83,14 +83,14 @@
             Analyze
           </button>
         </form>
-      </div>
+      </div> -->
     </div>
 
 
     <button type="button" class="in-second-screen text-casper font-bold mt-10 self-start text-sm" id="go-back-button"
       hidden>
       〈 GO BACK
-    <!-- </button> -->
+    </button>
 <!--------Initial state------>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -110,7 +110,7 @@
     <!----scripts------>
     <script>
     const urlForm = document.querySelector("#url-form");
-    const urlInput = document.querySelector("#url-input");
+    // const urlInput = document.querySelector("#url-input");
     const fileForm = document.querySelector("#file-form");
     const fileInput = document.querySelector("#file-input");
     const fileName = document.querySelector("#file-name");

@@ -125,38 +125,103 @@ Analyze</button>
           <% } %>
       </div>
           <div  class="words-box">
-                  <h1  id="a">Request Response</h1> 
-                  <% if (body.utterances=='false' && body.diarize=='true'  ) { %>
-                    <%  var speaker = transcription.results.channels[0].alternatives[0].words[0].speaker %> 
-                    <span style="color:white; display: inherit;"><b>Speaker <%= speaker %></b></span>
-                    <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-                     <% if(speaker!=transcription.results.channels[0].alternatives[0].words[i].speaker){ %>
-                       <span style="color:white"><b>Speaker <%= speaker %></b></span>
-                       <%   speaker = transcription.results.channels[0].alternatives[0].words[i].speaker %> 
-                       <% }  %>
-                     <span   style="color:white"  class="words" >   <%= transcription.results.channels[0].alternatives[0].words[i].word %></span> 
-                     <% } %>
-                  <!-- <p ><%= transcription.results.channels[0].alternatives[0].transcript %> </p> -->
-                  <% } else { %>
-                    <%  var speaker = transcription.results.utterances[0].speaker %> 
-                   <span style="color:white"><b>Speaker <%= speaker %></b></span>
-                   <% for (var i = 0; i < transcription.results.utterances.length;  i++ ) { %>
-                    <% if(speaker!=transcription.results.utterances[i].speaker){ %>
-                      <span style="color:white"><b>Speaker <%= speaker %></b></span>
-                      <%   speaker = transcription.results.utterances[i].speaker %> 
-                      <% }  %>
-                    <p   class="words" >   <%= transcription.results.utterances[i].transcript %></p> 
-                    <% } %>
-                  
-                  <!-- <article hidden id="sp-pu">
-                  
-                  <span><p hidden class="words" end="<%= transcription.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcription.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcription.results.channels[0].alternatives[0].words[i].start %>">   <%= transcription.results.channels[0].alternatives[0].words[i].punctuated_word %></p>
-                  </span>
-  </article> -->
+            
+            <% if((body.punctuate=='true' || body.numerals =='true') && body.         diarize=='false' && body.utterances=='false'){
+                var data  =  transcription.results.channels[0].alternatives[0]; 
+                var key = 'punctuated_word'; 
+                %>
+                
+              <p style="color:white"  class="words" >   <%= data.transcript %></p>
+              <% } else {
+                if(body.diarize=='true' && body.punctuate=='false' && body.numerals=='false' && body.utterances=='false'){
+                  var data  =  transcription.results.channels[0].alternatives[0].words;
+                  var key = 'word'; 
+             
+            
 
-                  <% } %>
+               } else if(body.utterances=='true' && body.diarize=='false' && body.numerals=='false' && body.punctuate=='false'){
+              var data = transcription.results.utterances;
+              var key = 'transcript'; 
+           
+             } else if(body.punctuate=='true'){
+               if (body.utterances=='true'){
+                var data = transcription.results.utterances;
+                var key = 'transcript'; 
+              
+               }
+               else if(body.diarize=='true'){
+                var data = transcription.results.channels[0].alternatives[0].words;
+                var key = 'punctuated_word'; 
+               }
+              }
+              else if(body.diarize=='true'){
+                if (body.utterances=='true'){
+                 var data = transcription.results.utterances;
+                 var key = 'transcript'; 
+               
+                }
+                else if (body.numerals=='true'){
+                  var data = transcription.results.channels[0].alternatives[0].words;
+                  var key = 'word'; 
+                
+                 }
+                
+               }
+
+               else if(body.utterances=='true'){
+                  if (body.numerals=='true'){
+                  var data = transcription.results.channels[0].alternatives[0].words;
+                  var key = 'word'; 
+                
+                 }
+                
+               }
+            }
+                 if(body.diarize=='true'){
+                     var speaker = data[0].speaker; %>
+                    <p style="color:#05f30d">Speaker <%= speaker %> </p>
+                    <% for (var i = 0; i < data.length;  i++ ) {
+                      if(speaker!=data[i].speaker){ %>
+                        <br>
+
+                        <p style="color:#05f30d">Speaker:   <%= speaker %> </p>
+                        <% speaker =  data[i].speaker 
+                       }
+                       if(body.utterances=='true'){ %>
+
+                      <p style="color:#fff">   <%= data[i][key] %> </p>
+                       <% }
+                       else{ %>
+                        <span style="color:#fff">   <%= data[i][key] %> </span>
+                       <% }
+                       } 
+                  }
+                  else{
+                for (var i = 0; i < data.length;  i++ ) { 
+                  if(body.utterances=='true'){ %>
+                    <p style="color:#fff">   <%= data[i][key] %> </p>
+                  <% }  
+                    else{
+                  
+                  %>
+                  <span style="color:#fff">   <%= data[i][key] %> </span>
+                  <% }  } } %>
+              
+              
+            
+             
+                    
+<!-- if punctuate is true -->
+<!-- <% if (body.punctuate=='true'   || body.numerals=='false' || body.diarize =='false'|| body.utterances =='false') { %>
+  <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+    <span >   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+    <% } %>
+<% } %>  -->
+
+      <!--  -->
           </div>  
     </div>
+
     <div class="boxyz">
           <div  class="side-box"> 
                 <h3  id="c">Response</h3>
@@ -198,11 +263,12 @@ Analyze</button>
         </button>
 
               <!-- Download button-->
-              <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+              <button  class="btn" onclick=saveTextAsFile(document.getElementById('b').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
 
 <!------------Text Editor Content----->
-  <p  id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
-  </div>
+<!-- 
+<p  id="foo" style="color:black"><%= JSON.stringify(transcription.results.channels[0].alternatives[0].transcript) %></p>
+</div> -->
 
         
       <!----------CSS Stylr---------->
@@ -284,14 +350,22 @@ Analyze</button>
       
       
   // Copy Button for Text-area
+  // function copyToClip(element) {
+  // var $temp = $(".words-box");
+  // $("body").append($temp);
+  // $temp.val($(element).text()).select();
+  // document.execCommand("copy");
+  // // $temp.remove();
+  // console.log($temp);
 
 
   function copyToClip() {
-    var str = document.getElementById('foo').innerHTML;
+    var str = document.getElementsByClassName('.words-box');
+    // console.log(str);  
   function listener(e) {
     
     // e.clipboardData.setData("text/html", str);
-    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
     e.preventDefault();
   }
   document.addEventListener("copy", listener);
@@ -309,14 +383,14 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
       // console.log('abc',textFileAsBlob)  
     	var downloadLink = document.createElement("a");
       var aa = await textFileAsBlob.text();
-      // console.log("aya" ,aa);
+      console.log("aya" ,aa);
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
     	{
     		// Chrome allows the link to be clicked
     		// without actually adding it to the DOM.
-    		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    		// downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
         // console.log('href' ,downloadLink.href);
 
     	}
@@ -341,9 +415,9 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
       </script>
 <!-- Initialize Quill editor -->
 <script>
-  var quill = new Quill('#foo ', {
-    theme: 'snow'
-  });
+  // var quill = new Quill('.words-box ', {
+  //   theme: 'snow'
+  // });
 </script>
 
  <!-- Playback Speed -->
