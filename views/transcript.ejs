@@ -114,6 +114,17 @@ Analyze</button>
       </label>
       <% } %>
     </div>  
+
+    <div  class="area">
+      <!---copy--button-->
+      <button  class="copy" onclick="copyToClip()">
+              Copy the stuff
+      </button>
+    
+      <!-- Download button-->
+      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+    </div>
+
     <!------- Output In Boxes ---------->
     <div  class="boxes">
       <div class="word-box2">
@@ -221,15 +232,6 @@ Analyze</button>
         </div>  
     </div>
 
-    <div  class="area">
-      <!---copy--button-->
-      <button  class="copy" onclick="copyToClip()">
-              Copy the stuff
-      </button>
-    
-      <!-- Download button-->
-      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
-    </div>
 
     <div class="boxyz">
           <div  class="side-box"> 

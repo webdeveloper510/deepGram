@@ -232,7 +232,11 @@ p {
 }
 
 .ql-container.ql-snow {
-  margin-top: 62px;
+  margin-top: 106px;
+}
+
+.boxes-list-conainer .boxes {
+  display: block;
 }
 
 .words{
@@ -242,7 +246,7 @@ cursor: pointer;
 
 .ql-toolbar.ql-snow {
   position: absolute;
-  right: 0;
+  right: 16px;
   top: 0;
   width: 47%;
 }
@@ -269,6 +273,7 @@ cursor: pointer;
     padding: 0px;
     float: left;
     width: 100%;
+    display: flex;
     flex-direction: row !important; 
     width: 100%;
     justify-content: flex-end;
@@ -276,6 +281,10 @@ cursor: pointer;
 .area button {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+}
+
+.boxes-list-conainer .boxes {
+  position: relative;
 }
 
 .fr-element  p{
