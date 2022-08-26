@@ -124,102 +124,111 @@ Analyze</button>
           <span id="abcdef" class="words" end="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].start %>">   <%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %> </span>
           <% } %>
       </div>
-          <div  class="words-box">
+        <div  id = "foo" class="words-box">
+          
+          <% if((body.punctuate=='true' || body.numerals =='true') && body.         diarize=='false' && body.utterances=='false'){
+              var data  =  transcription.results.channels[0].alternatives[0]; 
+              var key = 'punctuated_word'; 
+              %>
+              
+            <p style="color:white"  class="words" >   <%= data.transcript %></p>
+            <% } else {
+              if(body.diarize=='true' && body.punctuate=='false' && body.numerals=='false' && body.utterances=='false'){
+                var data  =  transcription.results.channels[0].alternatives[0].words;
+                var key = 'word'; 
             
-            <% if((body.punctuate=='true' || body.numerals =='true') && body.         diarize=='false' && body.utterances=='false'){
-                var data  =  transcription.results.channels[0].alternatives[0]; 
-                var key = 'punctuated_word'; 
-                %>
-                
-              <p style="color:white"  class="words" >   <%= data.transcript %></p>
-              <% } else {
-                if(body.diarize=='true' && body.punctuate=='false' && body.numerals=='false' && body.utterances=='false'){
-                  var data  =  transcription.results.channels[0].alternatives[0].words;
-                  var key = 'word'; 
-             
-            
+          
 
-               } else if(body.utterances=='true' && body.diarize=='false' && body.numerals=='false' && body.punctuate=='false'){
+              } else if(body.utterances=='true' && body.diarize=='false' && body.numerals=='false' && body.punctuate=='false'){
+            var data = transcription.results.utterances;
+            var key = 'transcript'; 
+          
+            } else if(body.punctuate=='true'){
+              if (body.utterances=='true'){
               var data = transcription.results.utterances;
               var key = 'transcript'; 
-           
-             } else if(body.punctuate=='true'){
-               if (body.utterances=='true'){
+            
+              }
+              else if(body.diarize=='true'){
+              var data = transcription.results.channels[0].alternatives[0].words;
+              var key = 'punctuated_word'; 
+              }
+            }
+            else if(body.diarize=='true'){
+              if (body.utterances=='true'){
                 var data = transcription.results.utterances;
                 var key = 'transcript'; 
               
-               }
-               else if(body.diarize=='true'){
-                var data = transcription.results.channels[0].alternatives[0].words;
-                var key = 'punctuated_word'; 
-               }
               }
-              else if(body.diarize=='true'){
-                if (body.utterances=='true'){
-                 var data = transcription.results.utterances;
-                 var key = 'transcript'; 
-               
+              else if (body.numerals=='true'){
+                var data = transcription.results.channels[0].alternatives[0].words;
+                var key = 'word'; 
+              
                 }
-                else if (body.numerals=='true'){
-                  var data = transcription.results.channels[0].alternatives[0].words;
-                  var key = 'word'; 
-                
-                 }
-                
-               }
+              
+              }
 
-               else if(body.utterances=='true'){
-                  if (body.numerals=='true'){
-                  var data = transcription.results.channels[0].alternatives[0].words;
-                  var key = 'word'; 
-                
-                 }
-                
-               }
-            }
-                 if(body.diarize=='true'){
-                     var speaker = data[0].speaker; %>
-                    <p style="color:#05f30d">Speaker <%= speaker %> </p>
-                    <% for (var i = 0; i < data.length;  i++ ) {
-                      if(speaker!=data[i].speaker){ %>
-                        <br>
+              else if(body.utterances=='true'){
+                if (body.numerals=='true'){
+                var data = transcription.results.channels[0].alternatives[0].words;
+                var key = 'word'; 
+              
+                }
+              
+              }
+          }
+                if(body.diarize=='true'){
+                    var speaker = data[0].speaker; %>
+                  <p style="color:#05f30d">Speaker     <%= speaker %> &nbsp; : &nbsp;</p>
+                  <% for (var i = 0; i < data.length;  i++ ) {
+                    if(speaker!=data[i].speaker){ %>
+                     
+                      <p style="color:#05f30d"><br> Speaker:   <%= speaker %> </p>
+                      <% speaker =  data[i].speaker 
+                      }
+                      if(body.utterances=='true'){ %>
 
-                        <p style="color:#05f30d">Speaker:   <%= speaker %> </p>
-                        <% speaker =  data[i].speaker 
-                       }
-                       if(body.utterances=='true'){ %>
-
-                      <p style="color:#fff">   <%= data[i][key] %> </p>
-                       <% }
-                       else{ %>
-                        <span style="color:#fff">   <%= data[i][key] %> </span>
-                       <% }
-                       } 
-                  }
+                    <p style="color:#fff"><%= data[i][key] %> </p>
+                      <% }
+                      else{ %>
+                      <span style="color:#fff;"><%= data[i][key] %></span>
+                      <% }
+                      } 
+                }
+                else{
+              for (var i = 0; i < data.length;  i++ ) { 
+                if(body.utterances=='true'){ %>
+                  <p style="color:#fff">   <%= data[i][key] %> </p>
+                <% }  
                   else{
-                for (var i = 0; i < data.length;  i++ ) { 
-                  if(body.utterances=='true'){ %>
-                    <p style="color:#fff">   <%= data[i][key] %> </p>
-                  <% }  
-                    else{
-                  
-                  %>
-                  <span style="color:#fff">   <%= data[i][key] %> </span>
-                  <% }  } } %>
-              
-              
+                
+                %>
+                <span style="color:#fff">   <%= data[i][key] %> </span>
+                <% }  } } %>
             
-             
-                    
+            
+          
+            
+                  
 <!-- if punctuate is true -->
 <!-- <% if (body.punctuate=='true'   || body.numerals=='false' || body.diarize =='false'|| body.utterances =='false') { %>
-  <% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
-    <span >   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
-    <% } %>
+<% for (var i = 0; i < transcription.results.channels[0].alternatives[0].words.length;  i++ ) { %>
+  <span >   <%= transcription.results.channels[0].alternatives[0].words[i].word %> </span>
+  <% } %>
 <% } %>  -->
 
-      <!--  -->
-          </div>  
+    <!--  -->
+        </div>  
+    </div>
+
+    <div  class="area">
+      <!---copy--button-->
+      <button  class="copy" onclick="copyToClip()">
+              Copy the stuff
+      </button>
+    
+      <!-- Download button-->
+      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
     </div>
 
     <div class="boxyz">
@@ -256,14 +265,6 @@ Analyze</button>
 <% }); %>
 
 <!--------Text Editor ------>
-<div  class="area">
-        <!---copy--button-->
-        <button  class="copy" onclick="copyToClip()">
-               Copy the stuff
-        </button>
-
-              <!-- Download button-->
-              <button  class="btn" onclick=saveTextAsFile(document.getElementById('b').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
 
 <!------------Text Editor Content----->
 <!-- 
@@ -316,57 +317,33 @@ Analyze</button>
         syncData.forEach(function (element ) {
         $('span' ).on('click' , function(event){
           $(this).css('cursor', 'pointer');
-        //   $(this).find(element.currentTime, element.start , element.target ) 
-        //   .addEventListener(change , function(e){
-        // audio.currentTime =  
-
-  // const attrs = Object.fromEntries(Array.from(this.attributes).map(item => [item.start]))
-  // console.log(attrs.start) // "test"
-
-      //  var a = $(this).val(element.start)
+     
       a = $(this).attr('start')
-      // console.log(a);
-  // })
-      //   console.log()
-        // let value = element.start.childNodes.nodeValue;
-        // console.log(value) // "test"
-  //       const attrs = Object.fromEntries(Array.from(a.attributes).map(item => [item.start]))
-  // console.log(attrs.start) // "test"
-        // if(typeof $(this).attr('start') != "undefined"){ 
-        //   console.log($(this).attr('src'));
-        //   }
+  
+
           if (
         audio.currentTime = a ){
-          // console.log(audio.currentTime)
+          
                   $(this).attr(audio.play())
         }
         else{
-          cpnsole.log('error')
+          console.log('error')
         }
         })
-          // target[index].classList.add('here')
+         
       })
-      
-      
-      
-  // Copy Button for Text-area
-  // function copyToClip(element) {
-  // var $temp = $(".words-box");
-  // $("body").append($temp);
-  // $temp.val($(element).text()).select();
-  // document.execCommand("copy");
-  // // $temp.remove();
-  // console.log($temp);
+
 
 
   function copyToClip() {
-    var str = document.getElementsByClassName('.words-box');
+    var str = document.getElementById('foo').innerHTML;
     // console.log(str);  
   function listener(e) {
     
-    // e.clipboardData.setData("text/html", str);
-    e.clipboardData.setData("text/plain", str);
+    var  a = e.clipboardData.setData("text/html", str);
+    // e.clipboardData.setData("rtf/html", str);
     e.preventDefault();
+    console.log(a);
   }
   document.addEventListener("copy", listener);
   document.execCommand("copy");
@@ -379,7 +356,7 @@ Analyze</button>
 
 async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     {
-    	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/plain'}); 
+    	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/html'}); 
       // console.log('abc',textFileAsBlob)  
     	var downloadLink = document.createElement("a");
       var aa = await textFileAsBlob.text();
@@ -390,7 +367,7 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     	{
     		// Chrome allows the link to be clicked
     		// without actually adding it to the DOM.
-    		// downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
         // console.log('href' ,downloadLink.href);
 
     	}
@@ -399,7 +376,7 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Firefox requires the link to be added to the DOM
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        // console.log('href' ,downloadLink.href);
+        console.log('href' ,downloadLink.href);
 
     		downloadLink.onclick = destroyClickedElement;
     		downloadLink.style.display = "none";
@@ -415,9 +392,9 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
       </script>
 <!-- Initialize Quill editor -->
 <script>
-  // var quill = new Quill('.words-box ', {
-  //   theme: 'snow'
-  // });
+  var quill = new Quill('#foo', {
+    theme: 'snow'
+  });
 </script>
 
  <!-- Playback Speed -->
@@ -528,51 +505,7 @@ box2.style.display = "none";
 <!-------------On click Enable event---------->
 
 <script>
-  // $(document).ready(function(){
-        // $("#submit1").click(function(){
-        // $(".flex flex-col items-center parent").show();
-        // $("#adi").show();
-        // $(".flex_bold").show();
-        // $(".flex flex-row space-x-8 flex-wrap mt-16").show();
-        // $(".font-bold text-lg mt-8 speaker").show();
-        // $(".text-sm  speaker").show();
-        // $(".text-sm speaker").show();
-        // $(".dropdown").show();
-        // $(".dropbtn").show();
-        // $(".dropdown-content").show();
-        // $(".confidence-list").show();
-        // $(".switch").show();
-        // $("#switch-button").show();
-        // $(".slider round").show();
-        // $("#switch-button2").show();
-        // $("#switch-button3").show();
-        // $("#switch-button4").show();
-        // $(".boxes").show();
-        // $(".words-box").show();
-        // $("#a").show();
-        // $("#b").show();
-        // $(".words").show();
-        // $(".side-box").show();
-        // $("#c").show();
-        // $(".sidewords").show();
-        // $("#div1").show();
-        // $("#submit").show();
-        // $("#submit1").hide();
-        // $("#file-input-label").show();
-        // $(".area").show();
-        // $(".copy").show();
-        // $(".btn").show();
-        // $("#foo").show();
-        // $("#flex").show();
-        // $("#font").show();
-        // $("#bold").show();
-        // $("#file-input").show();
-        // $("#file-name").show();
-        // $(".abc").hide();
-
-        //     });
-        // });
-
+  
         const fileName = document.querySelector("#file-name");
         const fileInput = document.querySelector("#file-input");
         fileInput.addEventListener("change", () => {
@@ -585,88 +518,11 @@ box2.style.display = "none";
 </script>
 
 <script>
-  //1
-  $(document).ready(function () { 
-    var chkid = localStorage.getItem("chkId");
-    if (chkid  === 'switch-button1') {
-      $('#switch-button1').attr('checked', true);
-      // $('#div2').show();
-    }
-  });
-  //2
-  $(document).ready(function () { 
-    var chkid2 = localStorage.getItem("chkId");
-    if (chkid2  === 'switch-button2') {
-      $('#switch-button2').attr('checked', true);
-      // $('#div3').show();
-      $('#sp').show();
-    }  
-  });
-  //3
-  $(document).ready(function () { 
-    var chkid3 = localStorage.getItem("chkId");
-    if (chkid3  === 'switch-button3') {
-      $('#switch-button3').attr('checked', true);
-      // $('#div4').show();
-      $('#pu').show();
-    }     
-  });
-  //4
-  // $(document).ready(function () { 
-  //   var chkid4 = localStorage.getItem("chkId");
-  //   if (chkid4  === 'switch-button4') {
-  //     $('#switch-button4').attr('checked', true);
-  //   } 
-  // });
-  //extra
-
-  // $(document).ready(function () { 
-  //   var chkid3 = localStorage.getItem("chkId");
-  //   var chkid2 = localStorage.getItem("chkId");
-  //   if (chkid2  === 'switch-button2' || chkid3 === 'switch-button3') {
-  //     $('#switch-button2').attr('checked', true);
-  //     $('#switch-button3').attr('checked', true);
-  //     $('#sp'),show();
-  //   console.log('done');
-  //   } 
-  // });
-  // $(document).ready(function () { 
-    // var chkid = localStorage.getItem("chkId");
-    // var chkidy = localStorage.getItem("chkId");
-    // var chkidx = localStorage.getItem("chkId");
-    // var chkidw = localStorage.getItem("chkId");
-    // if (chkido  === 'switch-button4' || chkidl === 'switch-button3' || chkidp === 'switch-button2'|| chkid === 'switch-button1')  {
-      // $('#switch-button3').attr('checked', true);
-      // $('#switch-button2').attr('checked', true);
-      // $('#switch-button').attr('checked', true);
-      // $('#switch-button4').attr('checked', true);
-      // $('#div5').show();
-    // } 
-
-    // else if (chkid  !== 'switch-button4' || chkid !== 'switch-button3' || chkid !== 'switch-button2'|| chkid !== 'switch-button1'){
-    //   $('#switch-button3').attr('checked', false);
-    //   $('#switch-button2').attr('checked', false);
-    //   $('#switch-button').attr('checked', false);
-    //   $('#switch-button4').attr('checked', false);
-    // }
-    // else{
-    //   alert('Kindly Check Manualy.')
-    // }
-  // });
-
-
-  // $(document).ready(function () { 
-  //   var chkid = localStorage.getItem("chkId");
-  //   if (chkid  != 'switch-button' && chkid != 'switch-button2' && chkid != 'switch-button3' && chkid != 'switch-button4') {
-  //     $('#switch-button3').attr('checked', false);
-  //     $('#switch-button2').attr('checked', false);
-  //     $('#switch-button').attr('checked', false);
-  //     $('#switch-button4').attr('checked', false);
-  //     $('#div1').show();
-  //   }     
-  // });
+  $("#foo p").has( "span" ).css({
+                                    'width' : '85%',
+                                    'margin-left' : 'auto',
+                                  });
 </script>
-
 
         <!----------script---------->
   

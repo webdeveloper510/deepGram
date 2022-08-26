@@ -228,20 +228,56 @@ p {
 
 .boxes:nth-child(2) {
     display: flex;
+    position: relative;
 }
+
+.ql-container.ql-snow {
+  margin-top: 62px;
+}
+
 .words{
 color:#000;
 cursor: pointer;
 }
+
+.ql-toolbar.ql-snow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 47%;
+}
+/* 
+#foo .ql-editor {
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+#foo .ql-editor p {
+  margin-bottom: 8px;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: -2px;
+}
+
 .words1{
     color:white;
 }
+
 .area {
     margin: 0px;
     padding: 0px;
     float: left;
     width: 100%;
+    flex-direction: row !important; 
+    width: 100%;
+    justify-content: flex-end;
 }
+.area button {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 .fr-element  p{
 color: #000;
 }
@@ -302,8 +338,16 @@ button {
 }
 
 .area {
-    width: 61%;
-    margin: 4rem 0;
+    margin: 2rem 0 4rem;
+}
+
+.confidence-list label svg {
+  color: #fff;
+  margin-left: 5px;
+}
+
+.boxes-list-conainer .confidence-list label h1 {
+  border-bottom: 1px solid #fff;
 }
 
 .area button.copy {
@@ -611,6 +655,10 @@ area button {
     width: 25%;
     max-width: 230px;
     justify-content: center;
+}
+
+.boxes-list-conainer .confidence-list label {
+  width: 18%;
 }
 
 .confidence-list label h1 {
