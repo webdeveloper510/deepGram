@@ -57,20 +57,26 @@
       <span   class="sliderround4">	</span>
     </label>
 
-    <label   class="switch4"> <h1  id="d">Utterances</h1>  
-      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('utterances',this)">
+    <label   class="switch4"> <h1  id="d">Confidence</h1>  
+      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('confidence',this)">
+      <span   class="sliderround4">	</span>
+    </label>
+    <label   class="switch4"> <h1  id="d">Json</h1>  
+      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('json',this)">
       <span   class="sliderround4">	</span>
     </label>
   </div>  
   <input type="hidden" id="diarize" name="diarize" value="false">
   <input type="hidden" id="punctuate" name="punctuate"  value="false">
   <input type="hidden" id="numerals" name="numerals"  value="false">
-  <input type="hidden" id="utterances" name="utterances"  value="false">
+  <input type="hidden" id="confidence" name="confidence"  value="false">
+  <input type="hidden" id="json" name="json"  value="false">
+  <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
+    Analyze
+  </button>
          <!------- Check-buttons----->
 
-          <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
-            Analyze
-          </button>
+        
         </form>
       </div>
       <!-- <div id="url-form">

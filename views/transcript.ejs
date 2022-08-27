@@ -23,22 +23,14 @@
 <!--------before-----click------->
 <form   id="flex" action="/" enctype="multipart/form-data" method="POST">
   <div class="browse">
-    <span   id="font">FROM YOUR DEVICE:</span>
-    <input   hidden type="file" id="file-input" name="file" required  />
-
   
-  <label   id="bold"
-    for="file-input" id="file-input-label">
-    Browse Files
-  </label>
   <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" ></div>
 </div>
 
 
 <div class="abc"> 
   <h1 ><%= JSON.stringify(filename) %></h1>
-<button type="submit" id="submit" class="transcript-button"  > 
-Analyze</button>
+
 </div>
 </form>
 <!-- <button type="submit" id="submit1">Show Results</button> -->
@@ -123,6 +115,10 @@ Analyze</button>
     
       <!-- Download button-->
       <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+      <%
+      if(body.confidence=='true'){ %>
+       <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
+        <% } %>
     </div>
 
     <!------- Output In Boxes ---------->
@@ -135,6 +131,7 @@ Analyze</button>
           <span id="abcdef" class="words" end="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].start %>">   <%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %> </span>
           <% } %>
       </div>
+    
         <div  id = "foo" class="words-box">
           
           <% if((body.punctuate=='true' || body.numerals =='true') && body.         diarize=='false' && body.utterances=='false'){
@@ -143,35 +140,27 @@ Analyze</button>
               %>
               
             <p style="color:white"  class="words" >   <%= data.transcript %></p>
-            <% } else {
-              if(body.diarize=='true' && body.punctuate=='false' && body.numerals=='false' && body.utterances=='false'){
+            <% } 
+            else if(body.punctuate=='false' && body.numerals =='false' && body.diarize=='false'){
+              var data = transcriptionOriginal.results.channels[0].alternatives[0].words;
+              var key = 'word'; 
+            } else {
+              if(body.diarize=='true' && body.punctuate=='false' && body.numerals=='false'){
                 var data  =  transcription.results.channels[0].alternatives[0].words;
                 var key = 'word'; 
             
           
 
-              } else if(body.utterances=='true' && body.diarize=='false' && body.numerals=='false' && body.punctuate=='false'){
-            var data = transcription.results.utterances;
-            var key = 'transcript'; 
-          
-            } else if(body.punctuate=='true'){
-              if (body.utterances=='true'){
-              var data = transcription.results.utterances;
-              var key = 'transcript'; 
-            
-              }
-              else if(body.diarize=='true'){
+              }  else if(body.punctuate=='true'){
+             
+               if(body.diarize=='true'){
               var data = transcription.results.channels[0].alternatives[0].words;
               var key = 'punctuated_word'; 
               }
             }
             else if(body.diarize=='true'){
-              if (body.utterances=='true'){
-                var data = transcription.results.utterances;
-                var key = 'transcript'; 
-              
-              }
-              else if (body.numerals=='true'){
+            
+               if (body.numerals=='true'){
                 var data = transcription.results.channels[0].alternatives[0].words;
                 var key = 'word'; 
               
@@ -179,14 +168,6 @@ Analyze</button>
               
               }
 
-              else if(body.utterances=='true'){
-                if (body.numerals=='true'){
-                var data = transcription.results.channels[0].alternatives[0].words;
-                var key = 'word'; 
-              
-                }
-              
-              }
           }
                 if(body.diarize=='true'){
                     var speaker = data[0].speaker; %>
@@ -197,25 +178,32 @@ Analyze</button>
                       <p style="color:#05f30d"><br> Speaker:   <%= speaker %> </p>
                       <% speaker =  data[i].speaker 
                       }
-                      if(body.utterances=='true'){ %>
-
-                    <p style="color:#fff"><%= data[i][key] %> </p>
-                      <% }
-                      else{ %>
+                      if(data[i].confidence < 0.86){ %>
+                  
+                     
+                        <span  style="color:#dc143c;"><%= data[i][key] %></span>
+  
+                       <% } else {
+                    
+                      %>
                       <span style="color:#fff;"><%= data[i][key] %></span>
-                      <% }
+                      <% 
+                       }
                       } 
                 }
                 else{
               for (var i = 0; i < data.length;  i++ ) { 
-                if(body.utterances=='true'){ %>
-                  <p style="color:#fff">   <%= data[i][key] %> </p>
-                <% }  
-                  else{
+                if(data[i].confidence < 0.86){ %>
+                  
+                     
+                  <span  style="color:#dc143c;"><%= data[i][key] %></span>
+
+                 <% } else{
+               
                 
                 %>
                 <span style="color:#fff">   <%= data[i][key] %> </span>
-                <% }  } } %>
+                <% }   } } %>
             
             
           
@@ -289,7 +277,9 @@ Analyze</button>
 <!--------Script Part----->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script>
-
+        var confidence = parseFloat($('#overall_confidence').html());
+        confidence =Math.round(confidence * 100) / 100;
+        $('#overall_confidence').html(confidence);
 //-----audio Click ------
 
 ( function(win, doc) {

@@ -108,7 +108,7 @@ async function requestDeepgramAPI({ res, filename, contentType, payload , body  
 
 
     const transcription = await deepgram.transcription.preRecorded(audioObj, {
-      utterances: body.utterances =='false' ? false : true,
+   //   utterances: body.utterances =='false' ? false : true,
       punctuate: body.punctuate =='false' ? false : true,
       diarize: body.diarize =='false' ? false : true,
       numerals:body.numerals =='false' ? false : true,
