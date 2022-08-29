@@ -27,14 +27,26 @@
     <div class="mt-40 flex flex-row space-x-10">
       <div id="file-form">
         <form class="flex flex-col space-y-3" id="submit" action="/" enctype="multipart/form-data" method="POST">
-          <span class="font-bold text-sm">FROM YOUR DEVICE:</span>
+          <span class="font-bold text-sm"> PC/Mac desktop Upload:</span>
           <input type="file" id="file-input" name="file" required hidden />
   
           <label class="bg-mint py-2 text-darkcharcoal w-60 cursor-pointer rounded-md text-center font-bold"
             for="file-input" id="file-input-label">
             Browse Files
           </label>
-          <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" hidden></div>
+<!-- enhanced and base -->
+<div  class="dropdown">
+  <button  class="dropbtn">Model Type</button>
+  <span class="caret"></span>
+        <div class="dropdown-content">
+
+            <button  onclick="abc(false)"   type="button">Base</button>
+            <button   onclick="abc(true)" type="button">Enhanced</button>
+        </div>
+</div>  
+<!-- file name -->
+          <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" ></div>
+          
         <!-----checkbuttons--->
   <div   class="confidence-list">
     <!-- <label   class="switch1"> <h1  id="a">Confidence</h1>
@@ -42,22 +54,22 @@
       <span   class="sliderround1">	</span>
     </label> -->
     
-    <label   class="switch2"> <h1  id="b">Diarize </h1>
+    <label   class="switch2"> <h1  id="b">Show Speakers </h1>
       <input   id="switch-button2" type="checkbox" onclick="linkPageContact('diarize',this)">
       <span   class="sliderround2">	</span>
     </label>
   
-    <label   class="switch3"> <h1  id="c">Punctuate</h1>
+    <label   class="switch3"> <h1  id="c">Punctuation</h1>
       <input   id="switch-button3" type="checkbox" onclick="linkPageContact('punctuate',this)">
       <span   class="sliderround3">	</span>
     </label>
   
-    <label   class="switch4"> <h1  id="d">Numeral</h1>  
+    <label   class="switch4"> <h1  id="d">Numerals</h1>  
       <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('numerals',this)">
       <span   class="sliderround4">	</span>
     </label>
 
-    <label   class="switch4"> <h1  id="d">Confidence</h1>  
+    <label   class="switch4"> <h1  id="d">Show Confidence</h1>  
       <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('confidence',this)">
       <span   class="sliderround4">	</span>
     </label>
@@ -71,8 +83,9 @@
   <input type="hidden" id="numerals" name="numerals"  value="false">
   <input type="hidden" id="confidence" name="confidence"  value="false">
   <input type="hidden" id="json" name="json"  value="false">
+  <input type="hidden" id="enhance" name="enhance"  value="false" >
   <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
-    Analyze
+    Analyse Audio
   </button>
          <!------- Check-buttons----->
 
@@ -122,54 +135,19 @@
     const fileName = document.querySelector("#file-name");
     const fileInputLabel = document.querySelector("#file-input-label");
     const goBackButton = document.querySelector("#go-back-button");
-
-
-    // const list = document.querySelector(".confidence-list");
-    // const switch1 = document.querySelectorAll(".switch1");
-    // const switch2 = document.querySelectorAll(".switch2");
-    // const switch3 = document.querySelectorAll(".switch3");
-    // const switch4 = document.querySelectorAll(".switch4");
-    // const sliderround1 = document.querySelectorAll(".sliderround1");
-    // const sliderround2= document.querySelectorAll(".sliderround2");
-    // const sliderround3 = document.querySelectorAll(".sliderround3");
-    // const sliderround4 = document.querySelectorAll(".sliderround4");
-    // const a = document.querySelector("#a");
-    // const b = document.querySelector("#b");
-    // const c = document.querySelector("#c");
-    // const d = document.querySelector("#d");
-    // const sbtn = document.querySelector("#switch-button1");
-    // const sbtn2 = document.querySelector("#switch-button2");
-    // const sbtn3= document.querySelector("#switch-button3");
-    // const sbtn4 = document.querySelector("#switch-button4");
-    urlInput.addEventListener("input", () => {
-      fileForm.hidden = true;
-      document
-        .querySelectorAll(".in-second-screen")
-        .forEach((node) => (node.hidden = false));
-    });
+    // urlInput.addEventListener("input", () => {
+    //   fileForm.hidden = true;
+    //   document
+    //     .querySelectorAll(".in-second-screen")
+    //     .forEach((node) => (node.hidden = false));
+    // });
 
 
     fileInput.addEventListener("change", () => {
-      urlForm.hidden = true;
+      // urlForm.hidden = true;
       fileInputLabel.hidden = true;
       fileName.textContent = fileInput.files[0].name;
-      // list.hidden = false;
-      // switch1.hidden = false;
-      // switch2.hidden = false;
-      // switch3.hidden = false;
-      // switch4.hidden = false;
-      // sliderround1.hidden = false;
-      // sliderround2.hidden = false;
-      // sliderround3.hidden = false;
-      // sliderround4.hidden = false;
-      // a.hidden = false;
-      // b.hidden = false;
-      // c.hidden = false;
-      // d.hidden = false;
-      // sbtn.hidden = false;
-      // sbtn2.hidden = false;
-      // sbtn3.hidden = false;
-      // sbtn4.hidden = false;
+      // console.log(fileName.textContent);
       document
         .querySelectorAll(".in-second-screen")
         .forEach((node) => (node.hidden = false));
@@ -194,7 +172,7 @@
       submitButtonNode.disabled = true;
     }
 
-    urlForm.addEventListener("submit", handleSubmit);
+    // urlForm.addEventListener("submit", handleSubmit);
     fileForm.addEventListener("submit", handleSubmit);
 </script>
 
@@ -288,19 +266,23 @@ function linkPageContact(param,element) {
     var checked = $(element).is(':checked');
     console.log(checked);
       $('#'+param).val(checked);
+
+}
   
 
-      }
+function abc(flag) {
+ 
+      $('#enhance').val(flag);
+}
+  
+$(".dropdown-content button").click(function(){
+  
+  $(".dropbtn:first-child").html($(this).text()+' <span class="caret"></span>');
+  
+});
 
-// function linkPageContact2(clicked_id2) {
-//   localStorage.setItem("chkId", clicked_id2);
-// }
-// function linkPageContact3(clicked_id3) {
-//   localStorage.setItem("chkId", clicked_id3);
-// }
-// function linkPageContact4(clicked_id4) {
-//   localStorage.setItem("chkId", clicked_id4);
-// }
+
+
 
 </script>
 

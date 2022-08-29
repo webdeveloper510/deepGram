@@ -85,7 +85,7 @@ app.get("/", (req, res) => {
  * ; payload: Buffer | string
  * }} params
  */
-async function requestDeepgramAPI({ res, filename, contentType, payload , body  ,}) {
+async function requestDeepgramAPI({ res, filename, contentType, payload , body }) {
 
 
   try {
@@ -112,7 +112,7 @@ async function requestDeepgramAPI({ res, filename, contentType, payload , body  
       punctuate: body.punctuate =='false' ? false : true,
       diarize: body.diarize =='false' ? false : true,
       numerals:body.numerals =='false' ? false : true,
-      //utt_split:0.8
+      tier  : body.enhance =='false' ? 'base'  : 'enhanced' 
     });
 
 
@@ -121,7 +121,7 @@ async function requestDeepgramAPI({ res, filename, contentType, payload , body  
     // console.log("transcription.results==============>",transcriptionOriginal.results.utterances|"[Speaker:\(.speaker)] \(.transcript)")
     // console.log("transcription.results==============>",transcription.results.)
     const speakers = computeSpeakingTime(transcription  );
-    // res.send(transcription)
+      // res.send(transcription)
     return {speakers,transcription  ,transcriptionOriginal , filename};
     // console.log("transcription.results==============>",transcription.results.channels[0].alternatives[0].words)
 
@@ -157,7 +157,7 @@ function error(res, error) {
  * before be sent to Deepgram API.
  */
 app.post("/", upload.single("file"), async (req, res) => {
-  const {diarize, puctuate,numerals , utterances} = req.body;
+  const {diarize, puctuate,numerals , utterances  , enhance} = req.body;
   try {
     if (!req.file) {
       res.send({
@@ -185,7 +185,7 @@ app.post("/", upload.single("file"), async (req, res) => {
           fileUrl,
           contentType: file.mimetype,
           payload: data,
-          body:req.body
+          body:req.body,
         });
         res.render("transcript.ejs",{speakers,transcription ,transcriptionOriginal, fileUrl ,filename,body:req.body});
        // console.log(words);

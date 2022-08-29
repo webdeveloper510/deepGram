@@ -73,10 +73,10 @@
   </div>
   <div class="boxes-list-conainer">
     <!------- Check-buttons----->
-    <div hidden class="confidence-list">
-      <% if (body.utterances=='true' ) { %>
+    <div  class="confidence-list">
+      <% if (body.enhance=='true' ) { %>
 
-      <label  hidden class="switch"> <h1  >Utterances</h1>
+      <label  hidden class="switch"> <h1>Model Enhanced </h1>
         
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
@@ -84,7 +84,7 @@
       
       <% if (body.diarize=='true' ) { %>
       
-      <label   class="switch"> <h1  >Diarize </h1>
+      <label   class="switch"> <h1  >Show Speakers </h1>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label> 
       
@@ -92,29 +92,36 @@
 
 
       <% if (body.punctuate=='true' ) { %>
-      <label   class="switch"> <h1  >Punctuate</h1>
+      <label   class="switch"> <h1  >Punctuation</h1>
    
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
      
       </label>
       <% } %>
       <% if (body.numerals=='true' ) { %>
-      <label  hidden class="switch"> <h1 >Numeral</h1>  
+      <label  hidden class="switch"> <h1 >Numerals</h1>  
  
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       
       </label>
       <% } %>
+      <% if (body.confidence=='true' ) { %>
+        <label  hidden class="switch"> <h1 >Show Condfidence  </h1>  
+   
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+        
+        </label>
+        <% } %>
     </div>  
 
     <div  class="area">
       <!---copy--button-->
       <button  class="copy" onclick="copyToClip()">
-              Copy the stuff
+        Copy text to clipboard
       </button>
     
       <!-- Download button-->
-      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download</button>
+      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download RTF Doc</button>
       <%
       if(body.confidence=='true'){ %>
        <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
@@ -124,7 +131,7 @@
     <!------- Output In Boxes ---------->
     <div  class="boxes">
       <div class="word-box2">
-        <h1  id="a">Actual Respose</h1> 
+        <h1  id="a">Raw Transcription</h1> 
 
         <!-- <span  id='b' style="color:#fff"><%= transcriptionOriginal.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span> -->
         <% for (var i = 0; i < transcriptionOriginal.results.channels[0].alternatives[0].words.length;  i++ ) { %>
@@ -134,12 +141,12 @@
     
         <div  id = "foo" class="words-box">
           
-          <% if((body.punctuate=='true' || body.numerals =='true') && body.         diarize=='false' && body.utterances=='false'){
+          <% if((body.punctuate=='true' || body.numerals =='true') && body.diarize=='false' && body.confidence=='false'){
               var data  =  transcription.results.channels[0].alternatives[0]; 
               var key = 'punctuated_word'; 
               %>
               
-            <p style="color:white"  class="words" >   <%= data.transcript %></p>
+            <p   class="words" >   <%= data.transcript %></p>
             <% } 
             else if(body.punctuate=='false' && body.numerals =='false' && body.diarize=='false'){
               var data = transcriptionOriginal.results.channels[0].alternatives[0].words;
@@ -186,7 +193,7 @@
                        <% } else {
                     
                       %>
-                      <span style="color:#fff;"><%= data[i][key] %></span>
+                      <span ><%= data[i][key] %></span>
                       <% 
                        }
                       } 
@@ -202,7 +209,7 @@
                
                 
                 %>
-                <span style="color:#fff">   <%= data[i][key] %> </span>
+                <span >   <%= data[i][key] %> </span>
                 <% }   } } %>
             
             
@@ -335,12 +342,12 @@
     var  a = e.clipboardData.setData("text/html", str);
     // e.clipboardData.setData("rtf/html", str);
     e.preventDefault();
-    console.log(a);
+    // console.log(a);
   }
   document.addEventListener("copy", listener);
   document.execCommand("copy");
   document.removeEventListener("copy", listener);
-  console.log("copied" , str);
+  // console.log("copied" , str);
   alert("The content is copied.")
 };
 
@@ -368,7 +375,8 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Firefox requires the link to be added to the DOM
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        console.log('href' ,downloadLink.href);
+        // console.log('href' ,downloadLink.href);
+
 
     		downloadLink.onclick = destroyClickedElement;
     		downloadLink.style.display = "none";

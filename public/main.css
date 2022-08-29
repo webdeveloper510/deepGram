@@ -586,11 +586,14 @@ area button {
     align-items: center;
     flex-wrap: wrap;
 }
-
+span.anchor.custom_width {
+  width: 100% !important;
+  background: #fff;
+  padding: 10px !important;
+}
 #file-form form,
 #url-form form {
-    display: flex;
-    width: 100%;
+ width: 100%;
     max-width: 650px;
     margin: 0 auto;
     justify-content: center;
@@ -671,8 +674,8 @@ area button {
 }
 
 .confidence-list label h1 {
-    margin: 0;
-    font-size: 24px;
+  margin: 0;
+  font-size: 16px;
 }
 
 .confidence-list label .slider {
@@ -855,7 +858,8 @@ label#bold{
   .switch4 h1 {
     text-align: center;
     color: #FFF;
-    font-size: 30px;
+    font-size: 16px;
+    margin: 0 0 0px 17pc;
 }
   .switch4 input { 
     opacity: 0;
@@ -1136,4 +1140,106 @@ span.words {
 
 .word-box2 {
   height: fit-content;
+}
+ul.items {
+  background: #fff;
+  margin: 0px;
+}
+
+ul.items li {
+  display: flex;
+  align-items: center;
+}
+.dropdown-check-list {
+  display: inline-block;
+
+
+  margin-left: 64px;
+}
+span.font-bold.text-sm {
+  padding: 10px !important;
+  height: auto !important;
+}
+label#file-input-label {
+  padding: 10px;
+}
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+}
+
+dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 13px;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+.dropdown-check-list input {
+  min-height: 34px;
+  padding: 0 7px;
+  outline: none;
+  border-radius: 3px;
+  box-shadow: none;
+  border: none;
+}
+
+#file-form form button, #url-form form button {
+  margin-top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#file-form form button, #url-form form button {
+  margin-top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #0b9341;
+  color: #fff;
 }
