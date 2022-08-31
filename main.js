@@ -112,7 +112,8 @@ async function requestDeepgramAPI({ res, filename, contentType, payload , body }
       punctuate: body.punctuate =='false' ? false : true,
       diarize: body.diarize =='false' ? false : true,
       numerals:body.numerals =='false' ? false : true,
-      tier  : body.enhance =='false' ? 'base'  : 'enhanced' 
+      tier  : body.enhance =='false' ? 'base'  : 'enhanced' ,
+      model : body.phonecall =='false' ? 'general'  : 'phonecall'
     });
 
 

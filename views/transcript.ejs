@@ -46,11 +46,11 @@
           <span class="caret"></span>
                 <div class="dropdown-content">
 
-                    <button  onclick="setPlaySpeed(0.9)" type="button">0.9x</button>
-                    <button   onclick="setPlaySpeed(1)" type="button">1x</button>
-                    <button   onclick="setPlaySpeed(1.2)" type="button">1.2x</button>
-                    <button   onclick="setPlaySpeed(2.5)" type="button">2.5x</button>
-                    <button  onclick="setPlaySpeed(5.2)" type="button">5.2x</button> 
+                    <button  onclick="setPlaySpeed(0.5)" type="button">0.5x</button>
+                    <button   onclick="setPlaySpeed(0.7)" type="button">0.7 x</button>
+                    <button   onclick="setPlaySpeed(1.0)" type="button">1.0x</button>
+                    <button   onclick="setPlaySpeed(1.25)" type="button">1.25x</button>
+                    <button  onclick="setPlaySpeed(1.5)" type="button">1.5x</button> 
                 </div>
       </div>  
 
@@ -81,7 +81,13 @@
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
       <% } %>
-      
+      <% if (body.phonecall =='true' ) { %>
+
+        <label  hidden class="switch"> <h1>Model Phonecall Enhanced </h1>
+          
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
+        </label>
+        <% } %>
       <% if (body.diarize=='true' ) { %>
       
       <label   class="switch"> <h1  >Show Speakers </h1>
@@ -121,7 +127,7 @@
       </button>
     
       <!-- Download button-->
-      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.rtf")><i class="fa fa-download"></i> Download RTF Doc</button>
+      <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.doc")><i class="fa fa-download"></i> Download Doc</button>
       <%
       if(body.confidence=='true'){ %>
        <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
@@ -138,10 +144,12 @@
           <span id="abcdef" class="words" end="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].start %>">   <%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %> </span>
           <% } %>
       </div>
-    
+
+      <h2 class="editor">Text Editor</h2>
+  
         <div  id = "foo" class="words-box">
           
-          <% if((body.punctuate=='true' || body.numerals =='true') && body.diarize=='false' && body.confidence=='false'){
+          <% if((body.punctuate=='true' || body.numerals =='true') && body.diarize=='false'){
               var data  =  transcription.results.channels[0].alternatives[0]; 
               var key = 'punctuated_word'; 
               %>
@@ -185,7 +193,7 @@
                       <p style="color:#05f30d"><br> Speaker:   <%= speaker %> </p>
                       <% speaker =  data[i].speaker 
                       }
-                      if(data[i].confidence < 0.86){ %>
+                      if(data[i].confidence < 0.85 && data[i].confidence > 0.75){ %>
                   
                      
                         <span  style="color:#dc143c;"><%= data[i][key] %></span>
@@ -200,7 +208,7 @@
                 }
                 else{
               for (var i = 0; i < data.length;  i++ ) { 
-                if(data[i].confidence < 0.86){ %>
+                if(data[i].confidence < 0.85 && data[i].confidence > 0.75){ %>
                   
                      
                   <span  style="color:#dc143c;"><%= data[i][key] %></span>
@@ -227,20 +235,20 @@
         </div>  
     </div>
 
-
+<!-- 
     <div class="boxyz">
           <div  class="side-box"> 
                 <h3  id="c">Response</h3>
                       <div  class="sidewords">
                         <pre  id="div1">   <%= JSON.stringify(transcriptionOriginal , null, 3) %> </pre>
 
-                            <!-- <pre hidden id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word, speaker_confidence: o.speaker_confidence , confidence: o.confidence}))) %> </pre>
+                           <pre hidden id="div2">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word, speaker_confidence: o.speaker_confidence , confidence: o.confidence}))) %> </pre>
 
                                   <pre hidden id="div3">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({speaker: o.speaker, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
                                         <pre hidden id="div4">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence}))) %> </pre>
 
-                                                <pre hidden id="div5">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word , speaker: o.speaker ,  punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence , }))) %> </pre> -->
+                                                <pre hidden id="div5">   <%= JSON.stringify(transcription.results.channels[0].alternatives[0].words.map(o => new Object({word: o.word , speaker: o.speaker ,  punctuated_word: o.punctuated_word, speaker_confidence: o.speaker_confidence , }))) %> </pre> 
 
 
                       </div>
@@ -251,12 +259,12 @@
                   <div  class="sidewords2">
                     <pre  id="div1">   <%= JSON.stringify(transcription , null, 3) %> </pre>
                   </div>
-                      <!-- <pre id="div2"> HEllo</pre> -->  
+                       <pre id="div2"> HEllo</pre> - 
 
           </div>
 
 
-    </div>
+    </div> -->
   </div>
 
 <% }); %>
@@ -355,11 +363,11 @@
 
 async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     {
-    	var textFileAsBlob = new Blob([textToWrite], {type:'rtf/html'}); 
-      // console.log('abc',textFileAsBlob)  
+    	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain;charset=utf-8'}); 
+      console.log('abc',textFileAsBlob)  
     	var downloadLink = document.createElement("a");
       var aa = await textFileAsBlob.text();
-      console.log("aya" ,aa);
+      // console.log("aya" ,aa);
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
@@ -411,92 +419,6 @@ $(".dropdown-content button").click(function(){
 });
 
 
-
-// CheckBox
-// 1 Confidence
-// function Check() {
-//   // Get the checkbox
-//   var checkBox = document.getElementById("switch-button");
-//   // Get the output text
-//   var text = document.getElementById("div1");
-// var text1 = document.getElementById("div2");
-//   // If1 the checkbox is checked, display the output text
-//   if (checkBox.checked == true){
-//     text.style.display = "none";
-//     text1.style.display = "block";
-    
-//   } else {  
-//   text.style.display = "block"
-//     text1.style.display = "none";
-//   }
-// }
-
-// 2 Speaerid
-function Check2() {
-  // Get the checkbox
-  var checkBox = document.getElementById("switch-button2");
-  // Get the output text
-//   var text = document.getElementById("div1");
-// var text1 = document.getElementById("div2");
-// var text2 = document.getElementById("div3");
-var box3 = document.getElementById("sp");
-
-  // If1 the checkbox is checked, display the output text
-  if (checkBox.checked == true){
-//     text.style.display = "none";
-//     text1.style.display = "none";
-//     text2.style.display = "block";
-  box3.style.display = "block";
-
-    
-  } else {  
-//   text.style.display = "block"
-//     text1.style.display = "none";
-//     text2.style.display = "none";
-box3.style.display = "none";
-
-
-  }
-}
-
-
-// 3 Punctuation
-
-
-function Check3() {
-  // Get the checkbox
-  var checkBox = document.getElementById("switch-button3");
-  // Get the output text
-//   var text = document.getElementById("div1");
-// var text1 = document.getElementById("div2");
-// var text2 = document.getElementById("div3");
-// var text3 = document.getElementById("div4");
-var box2 = document.getElementById("sp-pu");
-var box1 = document.getElementById("si");
-
-  // If1 the checkbox is checked, display the output text
-  if (checkBox.checked == true){
-//     text.style.display = "none";
-//     text1.style.display = "none";
-//     text2.style.display = "none";
-//     text3.style.display = "block";
-    box2.style.display = "block";
-    box1.style.display = "none";
-
-
-    
-  } else {  
-//   text.style.display = "block"
-//     text1.style.display = "none";
-//     text2.style.display = "none";
-//     text3.style.display = "none";
-box2.style.display = "none";
-    box1.style.display = "block ";
-  }
-}
-
-
-// Extra 
 
 
 </script>  
