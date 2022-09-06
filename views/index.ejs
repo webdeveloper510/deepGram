@@ -26,7 +26,7 @@
     <!---------start------>
     <div class="mt-40 flex flex-row space-x-10">
       <div id="file-form">
-        <form class="flex flex-col space-y-3" id="submit" action="/" enctype="multipart/form-data" method="POST">
+        <form class="flex flex-col space-y-3" id="submit" action="/" enctype="multipart/form-data" method="POST" >
           <div class="buttons">
             <span class="font-bold text-sm"> PC/Mac desktop Upload:</span>
           <input type="file" id="file-input" name="file" required hidden />
@@ -108,7 +108,7 @@
         </form>
       </div> -->
       <button type="button" class="back-button in-second-screen text-casper font-bold mt-10 self-start text-sm" id="go-back-button"
-      hidden>
+      onClick="window.location.reload()"  hidden>
       〈 GO BACK
     </button>
     </div>
@@ -213,10 +213,19 @@ $(".dropdown-content button").click(function(){
   
 });
 
+// form submit
 
-
-
-
+document.getElementById("submit").onsubmit = function(){
+    location.reload(true);
+}
+// previous page 
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    
+    window.location.reload();
+  }
+});
 </script>
 
 </body>
