@@ -133,7 +133,7 @@
         </button>
     
             <!-- Download button-->
-            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').textContent,"download.doc")><i class="fa fa-download"></i> Download Doc</button>
+            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.doc")><i class="fa fa-download"></i> Download Doc</button>
       <%
       if(body.confidence=='true'){ %>
        <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
