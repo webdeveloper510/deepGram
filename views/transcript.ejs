@@ -133,7 +133,7 @@
         </button>
     
             <!-- Download button-->
-            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.doc")><i class="fa fa-download"></i> Download Doc</button>
+            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.docx")><i class="fa fa-download"></i> Download Doc</button>
       <%
       if(body.confidence=='true'){ %>
        <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
@@ -310,12 +310,12 @@
     var  a = e.clipboardData.setData("text/html", str);
     // e.clipboardData.setData("rtf/html", str);
     e.preventDefault();
-    // console.log(a);
+    console.log(a);
   }
   document.addEventListener("copy", listener);
   document.execCommand("copy");
   document.removeEventListener("copy", listener);
-  // console.log("copied" , str);
+  console.log("copied" , str);
   alert("The content is copied.")
 };
 
@@ -323,11 +323,10 @@
   
 async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     {
-    	var textFileAsBlob = new Blob([textToWrite], {type:'text/html'}); 
-      // console.log('abc',textFileAsBlob)  
+    	var textFileAsBlob = new Blob([textToWrite], {type: textToWrite}); 
+      console.log('abc',textFileAsBlob)  
     	var downloadLink = document.createElement("a");
       var aa = await textFileAsBlob.text();
-      console.log("aya" ,aa); 
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
@@ -335,7 +334,7 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Chrome allows the link to be clicked
     		// without actually adding it to the DOM.
     		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-        // console.log('href' ,downloadLink.href);
+        console.log('href1' ,downloadLink.href);
 
     	}
     	else
@@ -343,7 +342,7 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// Firefox requires the link to be added to the DOM
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        // console.log('href' ,downloadLink.href);
+        console.log('href2' ,downloadLink.href);
 
 
     		downloadLink.onclick = destroyClickedElement;
