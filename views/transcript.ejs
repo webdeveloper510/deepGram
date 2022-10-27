@@ -59,7 +59,6 @@
                     <%= Math.round(duration / speakers.reduce((a,b)=>a+b,0)*100) + "%" %>
                 </div>
       
-
       </div>
     </div>
   </div>
@@ -68,32 +67,26 @@
     <div  class="confidence-list">
       <!-- Model Part -->
       <% if (body.enhance=='true' ) { %>
-
       <label  hidden class="switch"> <h1>Model Enhanced </h1>
         
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
       <% } %>
-
       <!--  -->
       <% if (body.phonecall =='true' ) { %>
-
       <label  hidden class="switch"> <h1>Model Phonecall Enhanced </h1>
         
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
       <% } %>
-
       <!--  -->
       <% if (body.enhance=='false' && body.phonecall=='false')  { %>
-
       <label  hidden class="switch"> <h1>Model General </h1>
         
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="__web-inspector-hide-shortcut__"><path d="M5.24911 9.43253L2.81661 7.00003L1.98828 7.82253L5.24911 11.0834L12.2491 4.08336L11.4266 3.26086L5.24911 9.43253Z" fill="currentcolor"></path></svg>
       </label>
       <% } %>
 <!-- Filter part -->
-
       <% if (body.diarize=='true' ) { %>
       
       <label   class="switch"> <h1  >Show Speakers </h1>
@@ -101,8 +94,6 @@
       </label> 
       
       <% } %>
-
-
       <% if (body.punctuate=='true' ) { %>
       <label   class="switch"> <h1  >Punctuation</h1>
    
@@ -125,36 +116,31 @@
         </label>
         <% } %>
     </div>  
-
     <div  class="area">
         <!---copy--button-->
         <button  class="copy" onclick="copyToClip()">
+
           Copy text to clipboard
         </button>
     
             <!-- Download button-->
-            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.docx")><i class="fa fa-download"></i> Download Doc</button>
+            <button  class="btn" onclick=saveTextAsFile(document.getElementById('foo').innerHTML,"download.doc")><i class="fa fa-download"></i> Download Doc</button>
       <%
       if(body.confidence=='true'){ %>
        <span style="color:#fff"> OverAll Confidence: <span id="overall_confidence"><%= transcription.results.channels[0].alternatives[0].confidence*100 %></span>%</span>
         <% } %>
     </div>
-
     <!------- Output In Boxes ---------->
     <div  class="boxes">
       <!-- Raw Transcription -->
           <div class="word-box2">
             <h1  id="a">Raw Transcription</h1> 
-
             <!-- <span  id='b' style="color:#fff"><%= transcriptionOriginal.results.channels[0].alternatives[0].transcript.split(' ')[0] %></span> -->
             <% for (var i = 0; i < transcriptionOriginal.results.channels[0].alternatives[0].words.length;  i++ ) { %>
                 <span id="abcdef" class="words" end="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].end %>" target="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %>" start="<%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].start %>">   <%= transcriptionOriginal.results.channels[0].alternatives[0].words[i].word %> </span>
             <% } %>
           </div>
-
-
         <!-- Requested Transcription -->
-
       <h2 class="editor">Text Editor</h2>
   
         <div  id = "foo" class="words-box">
@@ -175,7 +161,6 @@
                 var key = 'word'; 
             
           
-
               }  else if(body.punctuate=='true'){
              
                if(body.diarize=='true'){
@@ -192,7 +177,6 @@
                 }
               
               }
-
           }
                 if(body.diarize=='true'){
                     var speaker = data[0].speaker; %>
@@ -222,7 +206,6 @@
                   
                      
                   <span  style="color:#dc143c;"><%= data[i][key] %></span>
-
                  <% } else{
                
                 
@@ -232,7 +215,6 @@
         </div>  
      </div>
   </div>
-
 <% }); %>
 
 
@@ -256,14 +238,11 @@
         confidence =Math.round(confidence * 100) / 100;
         $('#overall_confidence').html(confidence);
 //-----audio Click ------
-
 ( function(win, doc) {
             var audioPlayer = doc.getElementById("adi");
             var subtitles = doc.getElementsByClassName("words");
                 var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
-
             
-
             audioPlayer.addEventListener("timeupdate", function(e){
                 syncData.forEach(function(element, index, array){
                     if( audioPlayer.currentTime >= element.start && audioPlayer.currentTime <= element.end ){
@@ -274,10 +253,7 @@
             });
                   }
                     (window, document));
-
-
         // on click 
-
         var audio = document.getElementById('adi');
         var target = document.getElementsByClassName('words')[0]
         var syncData = <%- JSON.stringify(transcription.results.channels[0].alternatives[0].words) %>;
@@ -287,7 +263,6 @@
      
       a = $(this).attr('start')
   
-
           if (
         audio.currentTime = a ){
           
@@ -299,9 +274,6 @@
         })
          
       })
-
-
-
   function copyToClip() {
     var str = document.getElementById('foo').innerHTML;
     // console.log(str);  
@@ -318,15 +290,20 @@
   console.log("copied" , str);
   alert("The content is copied.")
 };
-
 // DownLoad Button Click
   
 async function saveTextAsFile(textToWrite, fileNameToSaveAs)
-    {
-    	var textFileAsBlob = new Blob([textToWrite], {type: textToWrite}); 
-      console.log('abc',textFileAsBlob)  
+    { 
+      
+
+         var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+    var postHtml = "</body></html>";
+    var html = preHtml+textToWrite+postHtml;
+
+    	var textFileAsBlob = new Blob(['\ufeff', html], {type: 'application/msword'});;
+      console.log(html)
     	var downloadLink = document.createElement("a");
-      var aa = await textFileAsBlob.text();
+      var aa = await textFileAsBlob.text(); 
     	downloadLink.download = fileNameToSaveAs;
     	downloadLink.innerHTML = "Download File";
     	if (window.webkitURL != null)
@@ -335,7 +312,6 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// without actually adding it to the DOM.
     		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
         console.log('href1' ,downloadLink.href);
-
     	}
     	else
     	{
@@ -343,8 +319,6 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     		// before it can be clicked.
     		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
         console.log('href2' ,downloadLink.href);
-
-
     		downloadLink.onclick = destroyClickedElement;
     		downloadLink.style.display = "none";
     		document.body.appendChild(downloadLink);
@@ -353,7 +327,6 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
     
     	downloadLink.click();
     }
-
        
       
       </script>
@@ -362,6 +335,7 @@ async function saveTextAsFile(textToWrite, fileNameToSaveAs)
   var quill = new Quill('#foo', {
     theme: 'snow'
   });
+  
 </script>
 
  <!-- Playback Speed -->
@@ -376,26 +350,10 @@ $(".dropdown-content button").click(function(){
   $(".dropbtn:first-child").html($(this).text()+' <span class="caret"></span>');
   
 });
-
-
-
 </script>  
 
 
-<!-------------On click Enable event---------->
 
-<script>
-  
-        const fileName = document.querySelector("#file-name");
-        const fileInput = document.querySelector("#file-input");
-        fileInput.addEventListener("change", () => {
-          fileName.textContent = fileInput.files[0].name;
-          document
-        .querySelectorAll(".in-second-screen")
-        .forEach((node) => (node.hidden = false));
-    });
-
-</script>
 
 <script>
   $("#foo p").has( "span" ).css({

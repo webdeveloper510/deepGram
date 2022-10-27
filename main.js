@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const express = require("express");
 const http = require("http");
-
+const htmlDocx = require("html-docx-js")
 const ejs = require("ejs"); // template engine
 const multer = require("multer"); // handle file upload
 const fs = require("fs"); // access to the server's file system.
@@ -301,7 +301,7 @@ function computeSpeakingTime(transcript ,res ) {
     timePerSpeaker
   );
 
- 
+
 
   return (
     // converting the Map into an array
@@ -329,6 +329,20 @@ function addSpeakingTime(speaker, duration, timePerSpeaker ,res) {
 };
 
 //
+// app.get('/course/:name/:foo'), async (req, res) => {
+//   const { name, id } = req.params;
+//   const pages = await getCoursePages(id);
+//   let html = '';
+//   for(let i = 0; i < pages.length; i++) {
+//           html += pages[i].page;
+//   }
+//   const docx = htmlDocx.asBlob(html);
+//   res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//   res.setHeader('Content-Disposition', `attachment; filename=${ sluggify(name) }.docx`);
+//   res.setHeader('Content-Length', docx.length);
+//   res.send(docx);
+  
+// };
 
 const listener = server.listen(process.env.PORT, () =>
   console.log(`Server is running on port ${process.env.PORT}`)
