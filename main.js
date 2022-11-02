@@ -14,8 +14,25 @@ const { Deepgram } = require('@deepgram/sdk');
 const { json } = require("body-parser");
 const mysql = require("mysql")
 const bcrypt = require("bcrypt")
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const { request } = require("express");
+const session = require('express-session');
 const app = express();
+
+
+// enable body parsing
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+
+
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -61,14 +78,10 @@ var connection
   connection = connection
 })
 app.use(express.json())
-//middleware to read req.body.<params>
 
 //CREATE USER
 app.post("/signup", async (req,res) => {
-  // app.post("/",(req,res)=>{
-  //   const {fname, lname, email, birthday} = req.body
-  //   res.json({firstname:fname, lastname:lname, email:email, birthday:birthday})
-  // })
+
   const user = req.body.name;
   const email = req.body.email;
   const hashedPassword =req.body.password;
@@ -84,24 +97,17 @@ app.post("/signup", async (req,res) => {
 
    const insert_query = mysql.format(sqlInsert,[user , email , hashedPassword])
    console.log(insert_query)
-   // ? will be replaced by values
-   // ?? will be replaced by string
-   await connection.query (search_query, async (err, result) => {
+   connection.query (search_query, async (err, result) => {
     if (err) throw (err)
     console.log("------> Search Results")
     console.log(result.length)
     if (result.length != 0) {
-    //  connection.release()
-    //  alert("------> User already exists")
       res.redirect('/signup')
        res.sendStatus(409) 
     } 
     else {
-     await connection.query (insert_query, (err, result)=> {
-    //  connection.release()
+    connection.query (insert_query, (err, result)=> {
      if (err) throw (err)
-    //  alert("--------> Created new User")
-     console.log(result[0].insertId)
       res.redirect('/login')
     })
    }
@@ -115,33 +121,31 @@ app.post("/login", (req, res)=> {
   const email = req.body.email
   const password = req.body.password
 
-
+  db.getConnection( async (err, connection) => {
+    if (err) throw (err)
    const sqlSearch = "Select * from userTable where email = ?"
    const search_query = mysql.format(sqlSearch,[email])
-   console.log(search_query)
-    connection.query (search_query, async (err, result) => {
-    // connection.release()
-
+   connection.query (search_query, async (err, result) => {
     if (err) throw (err)
     if (result.length == 0) {
-    //  alert("--------> User does not exist")
       res.redirect('/signup')
     } 
     else {
        const hashedPassword = result[0].password
       //  get the hashedPassword from result
-      if (await bcrypt.compare(password, hashedPassword)) {
+      if (password, hashedPassword) {
       console.log("---------> Login Successful")
-      res.send(`${email} is logged in!`)
+      req.session.login = true
+      req.session.email = email
       res.redirect('/')
       } 
       else {
-      // alert("---------> Password Incorrect")
+
       res.redirect('/login')
       } //end of bcrypt.compare()
     }//end of User exists i.e. results.length==0
    }) //end of connection.query()
-
+  })
   }) //end of app.post()
 
 
@@ -199,10 +203,6 @@ app.get("/uploaded-file/:filename", (req, res) => {
   }
 });
 
-// enable body parsing
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 /*
  * Basic configuration:
  * - we expose the `/public` folder as a "static" folder, so
@@ -212,7 +212,12 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use(express.static(__dirname + "/public"));
 app.get("/", (req, res) => {
+  if(req.session.login==true){
   res.render("audiosubmit.ejs");
+  }
+  else{
+    res.redirect('/login')
+  }
 });
 
 /**
