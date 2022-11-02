@@ -14,7 +14,12 @@ const { Deepgram } = require('@deepgram/sdk');
 const { json } = require("body-parser");
 const mysql = require("mysql")
 const bcrypt = require("bcrypt")
+const bodyParser = require('body-parser')
 const app = express();
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 
 app.get("/login", (req, res) => {
@@ -38,6 +43,9 @@ const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_DATABASE = process.env.DB_DATABASE
 const DB_PORT = process.env.DB_PORT
+
+
+
 const db = mysql.createPool({
    connectionLimit: 100,
    host: DB_HOST,
@@ -46,9 +54,11 @@ const db = mysql.createPool({
    database: DB_DATABASE,
    port: DB_PORT
 })
-db.getConnection( (err, connection)=> {
+var connection
+ db.getConnection( (err, connection)=> {
   if (err) throw (err)
   console.log ("DB connected successful: " + connection.threadId)
+  connection = connection
 })
 app.use(express.json())
 //middleware to read req.body.<params>
@@ -101,14 +111,15 @@ app.post("/signup", async (req,res) => {
 
 // LOGIN (AUTHENTICATE USER)
 app.post("/login", (req, res)=> {
+
   const email = req.body.email
   const password = req.body.password
-  db.getConnection ( async (err, connection)=> {
-   if (err) throw (err)
+
+
    const sqlSearch = "Select * from userTable where email = ?"
    const search_query = mysql.format(sqlSearch,[email])
    console.log(search_query)
-   await connection.query (search_query, async (err, result) => {
+    connection.query (search_query, async (err, result) => {
     // connection.release()
 
     if (err) throw (err)
@@ -130,7 +141,7 @@ app.post("/login", (req, res)=> {
       } //end of bcrypt.compare()
     }//end of User exists i.e. results.length==0
    }) //end of connection.query()
-  }) //end of db.connection()
+
   }) //end of app.post()
 
 
