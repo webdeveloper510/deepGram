@@ -1,232 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Talk Time Analytics</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Homework</title>
+        <link rel="stylesheet" href="/main.css">
+    </head>
+    <body>
+        <div class="auth-container">
+          <div class="box">
+            <form action="/" method="post">
+            <div class="form" >
+                <h2>Login</h2>
+                <div class="inputBox">
+                    <input type="email" id='email' name="email" required>
+                    <span>Email</span>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" id='password' name="password" required>
+                    <span>Password</span>
+                    <i></i>
+                </div>
+                <div class="links">
+                    <a href="#">Forgot Password ?</a>
+                    <a href="/signup">SignUp</a>
+                </div>
+                <button class="button"  span>LOGIN</span></button>
+            </div>
+          </form>
+        </div>
+        </div>
+    </body>
 
-    <meta name="description" content="Talk Time Analytics" />
-    <meta name="author" content="Deepgram" />
-    <link href="/main.css" rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900|Source+Sans+Pro|Fira+Code|Material+Icons"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <style>
-      body {
-        font-family: "Source Sans Pro", sans-serif;
-      }
-    </style>
-  </head>
-<body>
-    <!---------start------>
-    <div class="mt-40 flex flex-row space-x-10">
-      <div id="file-form">
-        <form class="flex flex-col space-y-3" id="submit" action="/" enctype="multipart/form-data" method="POST" >
-          <div class="buttons">
-            <span class="font-bold text-sm"> PC/Mac desktop Upload:</span>
-          <input type="file" id="file-input" name="file" required hidden />
-  
-          <label class="bg-mint py-2 text-darkcharcoal w-60 cursor-pointer rounded-md text-center font-bold"
-            for="file-input" id="file-input-label">
-            Browse Files
-          </label>
-          <!-- enhanced and base -->
-          <div  class="dropdown">
-            <button  class="dropbtn">Model Type</button>
-            <span class="caret"></span>
-                  <div class="dropdown-content">
-
-                      <button  onclick="abc2(true)"   type="button">Phonecall-Enhanced</button>
-                      <button   onclick="abc(true)" type="button">Enhanced</button>
-                  </div>
-          </div> 
-          </div>
- 
-<!-- file name -->
-          <div class="font-bold text-3xl py-3 in-second-screen" id="file-name" ></div>
-          
-        <!-----checkbuttons--->
-  <div   class="confidence-list">
-    <!-- <label   class="switch1"> <h1  id="a">Confidence</h1>
-      <input   id="switch-button1" type="checkbox" onclick="linkPageContact()">
-      <span   class="sliderround1">	</span>
-    </label> -->
-    
-    <label   class="switch2"> <h1  id="b">Show Speakers </h1>
-      <input   id="switch-button2" type="checkbox" onclick="linkPageContact('diarize',this)">
-      <span   class="sliderround2">	</span>
-    </label>
-  
-    <label   class="switch3"> <h1  id="c">Punctuation</h1>
-      <input   id="switch-button3" type="checkbox" onclick="linkPageContact('punctuate',this)">
-      <span   class="sliderround3">	</span>
-    </label>
-  
-    <label   class="switch4"> <h1  id="d">Numerals</h1>  
-      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('numerals',this)">
-      <span   class="sliderround4">	</span>
-    </label>
-
-    <label   class="switch4"> <h1  id="d">Show Confidence</h1>  
-      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('confidence',this)">
-      <span   class="sliderround4">	</span>
-    </label>
-    <!-- <label   class="switch4"> <h1  id="d">Json</h1>  
-      <input   id="switch-button4" type="checkbox"  onclick="linkPageContact('json',this)">
-      <span   class="sliderround4">	</span>
-    </label> -->
-  </div>  
-  <input type="hidden" id="diarize" name="diarize" value="false">
-  <input type="hidden" id="punctuate" name="punctuate"  value="false">
-  <input type="hidden" id="numerals" name="numerals"  value="false">
-  <input type="hidden" id="confidence" name="confidence"  value="false">
-  <!-- <input type="hidden" id="json" name="json"  value="false"> -->
-  <input type="hidden" id="enhance" name="enhance"  value="false" >
-  <input type="hidden" id="phonecall" name="phonecall"  value="false" >
-  <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
-    Analyse Audio
-  </button>
-         <!------- Check-buttons----->
-
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script> -->
+        <script>
+        const source = document.getElementById('email');
+        const source = document.getElementById('password');
         
-        </form>
-      </div>
-      <!-- <div id="url-form">
-        <form class="flex flex-col space-y-3" action="/" method="POST">
-          <span class="font-bold text-sm">FROM AN URL:</span>
-          <input type="text" id="url-input"
-            class="bg-darkcharcoal p-2 border border-casper border-solid rounded-md placeholder-steel w-60" name="url"
-            placeholder="myremoteurl-file.com" required />
-          <button type="submit" class="in-second-screen text-darkcharcoal bg-mint py-2 w-60 rounded-md font-bold" id="submit" >
-            Analyze
-          </button>
-        </form>
-      </div> -->
-      <button type="button" class="back-button in-second-screen text-casper font-bold mt-10 self-start text-sm" id="go-back-button"
-      onClick="window.location.reload()"  hidden>
-      〈 GO BACK
-    </button>
-    </div>
+        const inputHandler = function(e) {
+        source.value = e.target.value;
+        }
 
-
-    
-<!--------Initial state------>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- <script>
-  $(':input').on('input', submitForm);
-
-  
-  function submitForm() {
-        var form = $(this).closest('form')[0];
-       form.submit();
-    }
-
-    $(':input').on('input', submitForm);
-   </script> -->  
-  
-
-    <!----scripts------>
-    <script>
-    const urlForm = document.querySelector("#url-form");
-    // const urlInput = document.querySelector("#url-input");
-    const fileForm = document.querySelector("#file-form");
-    const fileInput = document.querySelector("#file-input");
-    const fileName = document.querySelector("#file-name");
-    const fileInputLabel = document.querySelector("#file-input-label");
-    const goBackButton = document.querySelector("#go-back-button");
-    // urlInput.addEventListener("input", () => {
-    //   fileForm.hidden = true;
-    //   document
-    //     .querySelectorAll(".in-second-screen")
-    //     .forEach((node) => (node.hidden = false));
-    // });
-
-
-    fileInput.addEventListener("change", () => {
-      // urlForm.hidden = true;
-      fileInputLabel.hidden = true;
-      fileName.textContent = fileInput.files[0].name;
-      // console.log(fileName.textContent);
-      document
-        .querySelectorAll(".in-second-screen")
-        .forEach((node) => (node.hidden = false));
-    });
-
-
-    goBackButton.addEventListener("click", () => {
-      document
-        .querySelectorAll(".in-second-screen")
-        .forEach((node) => (node.hidden = true));
-      urlForm.hidden = false;
-      fileForm.hidden = false;
-      fileInput.value = 1;
-      fileInputLabel.hidden = false;
-    });
-
-    function handleSubmit() {
-      const submitButtonNode = this.querySelector("button[type='submit']");
-      // console.log(submitButtonNode, this);
-      submitButtonNode.classList.add("opacity-50", "cursor-not-allowed");
-      submitButtonNode.innerText = "Analyzing...";
-      submitButtonNode.disabled = true;
-    }
-
-    // urlForm.addEventListener("submit", handleSubmit);
-    fileForm.addEventListener("submit", handleSubmit);
-</script>
-
-
-<!----Checkbuttons---->
-
-
-<script>
-function linkPageContact(param,element) {
-    var checked = $(element).is(':checked');
-    console.log(checked);
-      $('#'+param).val(checked);
-
-}
-  
-
-function abc(flag) {
- 
-      $('#enhance').val(flag);
-      console.log(flag);
-}
-function abc2(flag) {
-
- $('#phonecall').val(flag);
- console.log(flag);
-
-}
-
-  
-$(".dropdown-content button").click(function(){
-  
-  $(".dropbtn:first-child").html($(this).text()+' <span class="caret"></span>');
-  
-});
-
-// form submit
-
-document.getElementById("submit").onsubmit = function(){
-    location.reload(true);
-}
-// previous page 
-window.addEventListener( "pageshow", function ( event ) {
-  var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
-  if ( historyTraversal ) {
-    
-    window.location.reload();
-  }
-});
-</script>
-
-</body>
+        source.addEventListener('input', inputHandler);
+        source.addEventListener('propertychange', inputHandler); // for IE8
+        // Firefox/Edge18-/IE9+ don’t fire on <select><option>
+        // source.addEventListener('change', inputHandler); 
+        </script>
 </html>

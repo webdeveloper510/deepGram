@@ -12,8 +12,145 @@ const multer = require("multer"); // handle file upload
 const fs = require("fs"); // access to the server's file system.
 const { Deepgram } = require('@deepgram/sdk');
 const { json } = require("body-parser");
+const mysql = require("mysql")
+const bcrypt = require("bcrypt")
+const app = express();
 
 
+app.get("/login", (req, res) => {
+	res.render('index.ejs');
+});
+
+
+
+app.get('/signup', (req, res) => {
+
+	res.render('signup.ejs');
+  
+  });
+
+
+// // database authantication for Login and Signup
+
+
+const DB_HOST = process.env.DB_HOST
+const DB_USER = process.env.DB_USER
+const DB_PASSWORD = process.env.DB_PASSWORD
+const DB_DATABASE = process.env.DB_DATABASE
+const DB_PORT = process.env.DB_PORT
+const db = mysql.createPool({
+   connectionLimit: 100,
+   host: DB_HOST,
+   user: DB_USER,
+   password: DB_PASSWORD,
+   database: DB_DATABASE,
+   port: DB_PORT
+})
+db.getConnection( (err, connection)=> {
+  if (err) throw (err)
+  console.log ("DB connected successful: " + connection.threadId)
+})
+app.use(express.json())
+//middleware to read req.body.<params>
+
+//CREATE USER
+app.post("/signup", async (req,res) => {
+  // app.post("/",(req,res)=>{
+  //   const {fname, lname, email, birthday} = req.body
+  //   res.json({firstname:fname, lastname:lname, email:email, birthday:birthday})
+  // })
+  const user = req.body.name;
+  const email = req.body.email;
+  const hashedPassword =req.body.password;
+
+  db.getConnection( async (err, connection) => {
+   if (err) throw (err)
+   const sqlSearch = "SELECT * FROM userTable WHERE user = ?"
+   const search_query = mysql.format(sqlSearch,[user])
+  console.log(user , email , hashedPassword)
+
+   const sqlInsert = "INSERT INTO userTable VALUES (0,?,?,?)"
+  console.log(user , email , hashedPassword , sqlInsert)
+
+   const insert_query = mysql.format(sqlInsert,[user , email , hashedPassword])
+   console.log(insert_query)
+   // ? will be replaced by values
+   // ?? will be replaced by string
+   await connection.query (search_query, async (err, result) => {
+    if (err) throw (err)
+    console.log("------> Search Results")
+    console.log(result.length)
+    if (result.length != 0) {
+    //  connection.release()
+    //  alert("------> User already exists")
+      res.redirect('/signup')
+       res.sendStatus(409) 
+    } 
+    else {
+     await connection.query (insert_query, (err, result)=> {
+    //  connection.release()
+     if (err) throw (err)
+    //  alert("--------> Created new User")
+     console.log(result[0].insertId)
+      res.redirect('/login')
+    })
+   }
+  }) //end of connection.query()
+  }) //end of db.getConnection()
+  })
+
+// LOGIN (AUTHENTICATE USER)
+app.post("/login", (req, res)=> {
+  const email = req.body.email
+  const password = req.body.password
+  db.getConnection ( async (err, connection)=> {
+   if (err) throw (err)
+   const sqlSearch = "Select * from userTable where email = ?"
+   const search_query = mysql.format(sqlSearch,[email])
+   console.log(search_query)
+   await connection.query (search_query, async (err, result) => {
+    // connection.release()
+
+    if (err) throw (err)
+    if (result.length == 0) {
+    //  alert("--------> User does not exist")
+      res.redirect('/signup')
+    } 
+    else {
+       const hashedPassword = result[0].password
+      //  get the hashedPassword from result
+      if (await bcrypt.compare(password, hashedPassword)) {
+      console.log("---------> Login Successful")
+      res.send(`${email} is logged in!`)
+      res.redirect('/')
+      } 
+      else {
+      // alert("---------> Password Incorrect")
+      res.redirect('/login')
+      } //end of bcrypt.compare()
+    }//end of User exists i.e. results.length==0
+   }) //end of connection.query()
+  }) //end of db.connection()
+  }) //end of app.post()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// after login and signup
 
 const DG_KEY = process.env.DG_KEY;
 
@@ -21,7 +158,6 @@ if (DG_KEY === undefined) {
   throw "You must define DG_KEY in your .env file";
 }
 
-const app = express();
 app.set("view engine", "ejs"); // initialize "ejs" template engine
 let server = http.createServer(app);
 
@@ -65,7 +201,7 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use(express.static(__dirname + "/public"));
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("audiosubmit.ejs");
 });
 
 /**
@@ -197,6 +333,7 @@ app.post("/", upload.single("file"), async (req, res) => {
     error(res, err);
   }
 });
+
 
 /**
  * Handle file upload from URL.
@@ -345,5 +482,5 @@ function addSpeakingTime(speaker, duration, timePerSpeaker ,res) {
 // };
 
 const listener = server.listen(process.env.PORT, () =>
-  console.log(`Server is running on port ${process.env.PORT}`)
+  console.log(`Server is running on port ${process.env.PORT}/login`)
 );

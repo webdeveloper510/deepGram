@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Homework</title>
+        <link rel="stylesheet" href="/main.css">
+    </head>
+    <body>
+        <div class="auth-container">
+            <div class="box">
+                <form action="/signup" method="post">
+                <div class="form">
+                    <h2>Sign Up</h2>
+                    <div class="inputBox">
+                        <input type="text" id="user" onpropertychange="TextChange(this)" name="user" required>
+                        <span>Username</span>
+                        <i></i>
+                    </div>
+    
+                    <div class="inputBox">
+                        <input type="email" id="emailr" onpropertychange="TextChange(this)" name="email" required>
+                        <span>Email</span>
+                        <i></i>
+                    </div>
+    
+                    <div class="inputBox">
+                        <input type="password" id="passwordr" onpropertychange="TextChange(this)" name="password" required>
+                        <span>Password</span>
+                        <i></i>
+                    </div>
+                    <div class="links">
+                        <a href="/">Already have an Account? Login</a>
+                    </div>
+                    <button class="button" type="submit"><span>Sign Up</span></button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </body>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script> -->
+        <script>
+        const source = document.getElementById('user');
+        const source = document.getElementById('emailr');
+        const source = document.getElementById('passwordr');
+
+        const inputHandler = function(e) {
+            source.value = e.target.value;
+        }
+
+        source.addEventListener('input', inputHandler);
+        source.addEventListener('propertychange', inputHandler); // for IE8
+        // Firefox/Edge18-/IE9+ don’t fire on <select><option>
+        // source.addEventListener('change', inputHandler); 
+
+
+        </script>
+</html>

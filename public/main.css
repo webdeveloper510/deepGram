@@ -1506,3 +1506,174 @@ h2.editor {
     right: 90px;
   }
 }
+
+
+
+
+
+/* # Login page */
+
+
+.box {
+  position: relative;
+  width: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 1px 5px 5px 1px;
+  display: flex;
+  margin: 0 auto;
+}
+
+.box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+}
+
+.box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -9s;
+}
+
+.auth-container {
+  height: 97vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes animate {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.box .form {
+  position: relative;
+  background: #28292d;
+  border-radius: 8px;
+  inset: 2px;
+  z-index: 10;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.box .form h2 {
+  color: #45f3ff;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.box .inputBox {
+  position: relative;
+  width: 300px;
+  margin-top: 35px;
+}
+
+.box .inputBox input {
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #23242a;
+  font-size: 1em;
+  letter-spacing: 0.05px;
+  z-index: 10;
+}
+
+.box .inputBox span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 20px 0px 10px;
+  font-size: 1em;
+  color: #8f8f8f;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+.box .inputBox input:valid ~ span,
+.box .inputBox input:focus ~ span {
+  color: #45f3ff;
+  transform: translateX(0px) translateY(-34px);
+  font-size: 0.75em;
+}
+
+.box .inputBox i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #45f3ff;
+  border-radius: 4px;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.box .inputBox input:valid ~ i,
+.box .inputBox input:focus ~ i {
+  height: 44px;
+}
+
+.box .links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.box .links a {
+  margin: 10px 0;
+  font-size: 0.75em;
+  color: #8f8f8f;
+  text-decoration: none;
+}
+
+.box .links a:hover,
+.box .links a:nth-child(2) {
+  color: #45f3ff;
+}
+
+.box .button {
+background: #45f3ff;
+font-size: 16px;
+margin: 30px auto 0;
+padding: 12px 20px;
+text-transform: uppercase;
+font-weight: 600;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 150px;
+color: #23242a;
+cursor: pointer;
+border: none;
+border-radius: 5px;
+}
+
+.button:hover,
+.button:focus {  
+  opacity: 0.7;
+}
