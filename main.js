@@ -57,7 +57,7 @@ app.get('/signup', (req, res) => {
 
 const DB_HOST = 'localhost'
 const DB_USER = 'root'
-const DB_PASSWORD = ''
+const DB_PASSWORD = 'Admin@123'
 const DB_DATABASE = 'Deep_Gram'
 const DB_PORT = 3306
 
